@@ -6,20 +6,21 @@ namespace TP_PW.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("EstadoEmprestimo")]
-    public partial class EstadoEmprestimo
+    public partial class AspNetRoles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public EstadoEmprestimo()
+        public AspNetRoles()
         {
-            Emprestimos = new HashSet<Emprestimos>();
+            AspNetUsers = new HashSet<AspNetUsers>();
         }
 
         public string Id { get; set; }
 
-        public string Estado { get; set; }
+        [Required]
+        [StringLength(256)]
+        public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Emprestimos> Emprestimos { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
     }
 }

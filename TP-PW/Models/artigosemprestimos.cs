@@ -1,26 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
-
 namespace TP_PW.Models
 {
-    public class artigosemprestimos
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class ArtigosEmprestimos
     {
-        [Key, ForeignKey("espolio"), Column(Order = 0)]
-        public string IdEspolio { get; set; } //NVARCHAR(128)
-        [Key, ForeignKey("emprestimo"), Column(Order = 1)]
-        public string IdEmprestimo { get; set; } //NVARCHAR(128)
-        public DateTime DataEntregue { get; set; } //DATE
+        [Key]
+        [Column(Order = 0)]
+        public string IdArtigo { get; set; }
 
-        [JsonIgnore]
-        public espolio espolio { get; set; }
-        [JsonIgnore]
-        public emprestimo emprestimo { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        public string IdEmprestimo { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime? DataRetornoArtigo { get; set; }
 
+        public virtual Artigos Artigos { get; set; }
+
+        public virtual Emprestimos Emprestimos { get; set; }
     }
 }
