@@ -12,7 +12,7 @@ namespace TP_PW.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public EstadoEmprestimo()
         {
-            Emprestimos = new HashSet<Emprestimos>();
+            Emprestimos = new HashSet<Emprestimo>();
         }
 
         public string Id { get; set; }
@@ -20,6 +20,6 @@ namespace TP_PW.Models
         public string Estado { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Emprestimos> Emprestimos { get; set; }
+        public virtual ICollection<Emprestimo> Emprestimos { get; set; }
     }
 }
