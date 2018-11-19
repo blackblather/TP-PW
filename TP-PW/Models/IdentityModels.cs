@@ -25,6 +25,40 @@ namespace TP_PW.Models
         {
         }
 
+        public virtual DbSet<Artigo> Artigos { get; set; }
+        public virtual DbSet<ArtigosEmprestimo> ArtigosEmprestimos { get; set; }
+        public virtual DbSet<Emprestimo> Emprestimos { get; set; }
+        public virtual DbSet<EstadoEmprestimo> EstadoEmprestimoes { get; set; }
+        public virtual DbSet<Mensagem> Mensagens { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Artigo>()
+                .Property(e => e.Descricao)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Artigo>()
+                .HasMany(e => e.ArtigosEmprestimos)
+                .WithRequired(e => e.Artigo)
+                .HasForeignKey(e => e.IdArtigo);
+
+            modelBuilder.Entity<Emprestimo>()
+                .HasMany(e => e.ArtigosEmprestimos)
+                .WithRequired(e => e.Emprestimo)
+                .HasForeignKey(e => e.IdEmprestimo);
+
+            modelBuilder.Entity<EstadoEmprestimo>()
+                .HasMany(e => e.Emprestimos)
+                .WithRequired(e => e.EstadoEmprestimo)
+                .HasForeignKey(e => e.IdEstado)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Mensagem>()
+                .Property(e => e.Texto)
+                .IsUnicode(false);
+        }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
