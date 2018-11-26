@@ -33,6 +33,7 @@ namespace TP_PW.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Artigo>()
                 .Property(e => e.Descricao)
                 .IsUnicode(false);

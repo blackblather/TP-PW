@@ -4,6 +4,14 @@
     ViewBag.Title = "Error";
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<div class="error-area" style="background-image: url(../../assets/img/404-bg.png)">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <h1>Error 404</h1>
+                <a href=@Html.ActionLink("Home", "Index", "Home") class="button">Back to home</a>
+            </div>
+        </div>
+    </div>
+</div>   
 
