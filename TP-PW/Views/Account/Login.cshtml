@@ -4,8 +4,62 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div class="row">
+
+<div class="row" style="background-color: #f3f3f3">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-box", role = "form", style = "margin: 25px" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-top">
+                <div class="form-top-left">
+                    <h3>Login to our site</h3>
+                    <p>Enter username and password to log on:</p>
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                </div>
+                <div class="form-top-right">
+                    <i class="fa fa-pencil"></i>
+                </div>
+
+            </div>
+
+            <div class="form-bottom">
+                <form role="form" action="" method="post" class="registration-form">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "sr-only", @for = "form-email" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-email form-control", @name = "form-email", @placeholder = "Email...", @id = "form-email" })
+                    </div>
+
+                    <div class="form-group">
+
+                        @Html.LabelFor(m => m.Password, new { @class = "sr-only", @for = "form-password" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Password...", @id = "form-password" })
+
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                @Html.CheckBoxFor(m => m.RememberMe)
+                                @Html.LabelFor(m => m.RememberMe)
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn">Login</button>
+                </form>
+            </div>
+
+        }
+    </div>
+    <div class="col-sm-2"></div>
+</div>
+
+
+
+
+
+@*<div class="row">
     <div class="col-md-8">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -48,16 +102,16 @@
                     <p>
                         @Html.ActionLink("Forgot your password?", "ForgotPassword")
                     </p>*@
-            }
+@*  }
         </section>
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+<div class="col-md-4">
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
 </div>
-
+</div>
+*@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

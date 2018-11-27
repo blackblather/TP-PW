@@ -64,26 +64,22 @@
 
 
 
-        <header>
+        <header style="padding: 10px">
             <div class="container">
-                <div class="row">
-                    <div class="col-6 col-sm-3 logo-column">
+                <div class="row" style="margin-top: 5px">
+                    <div class="col-sm-2 logo-column">
                         <a href="index.html" class="logo">
                             <img src="../../assets/img/logo.png" alt="logo">
                         </a>
                     </div>
-                    <div class="col-6 col-sm-9 nav-column clearfix">
+                    <div class="col-6 col-sm-8 nav-column clearfix">
                         <div class="right-nav">
                             <span class="search-icon fa fa-search"></span>
                             <form action="#" class="search-form">
                                 <input type="search" placeholder="search now">
                                 <button type="submit"><i class="fa fa-search"></i></button>
                             </form>
-                            <div class="header-social">
-                                <a href="#" class="fa fa-facebook"></a>
-                                <a href="#" class="fa fa-twitter"></a>
-                                <a href="#" class="fa fa-github"></a>
-                            </div>
+                            
                         </div>
                         <nav id="menu" class="d-none d-lg-block">
                             <ul>
@@ -107,8 +103,13 @@
                                     </ul>
                                 </li>
                                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+
                             </ul>
+                            
                         </nav>
+                    </div>
+                    <div class="col-6 col-sm-2">
+                        @Html.Partial("_LoginPartial")
                     </div>
                 </div>
             </div>
