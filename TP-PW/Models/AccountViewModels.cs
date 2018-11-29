@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace TP_PW.Models
@@ -49,9 +50,8 @@ namespace TP_PW.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -62,12 +62,55 @@ namespace TP_PW.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel
+    public class AdicionarUserViewModel
     {
+        [Required]
+        [Display(Name = "Permissão")]
+        public string UserRole { get; set; }
+
         [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
 
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [Required]
+        [Display(Name = "Primeiro Nome")]
+        public string PrimeiroNome { get; set; }
+
+        [Required]
+        [Display(Name = "Apelido")]
+        public string Apelido { get; set; }
+
+        [Required]
+        [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime DataNascimento { get; set; }
+
+        [Required]
+        [Display(Name = "Numero Telemovel")]
+        public string  NumTelemovel { get; set; }
+    }
+
+
+    public class RegisterViewModel
+    {
+
+        [Required]
+        public string UserRole { get; set; } = "Utilizador";
+
+        [Required]
+        [Display(Name = "UserName")]
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]

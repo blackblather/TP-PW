@@ -27,7 +27,58 @@ namespace TP_PW.Models
         [StringLength(2000)]
         public string ImagemURL { get; set; }
 
+        [Required]
+        public tipoPeca Tipo { get; set; }
+
+        public string Origem { get; set; }
+
+        public DateTime? AnoDescoberto { get; set; }
+
+        public string ZonaDescoberto { get; set; }
+
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArtigosEmprestimo> ArtigosEmprestimos { get; set; }
+
+        public virtual ICollection<Tratamento> Tratamentos { get; set; }
+
+
+     
+    }
+
+    public class ArtigosViewModel
+    {
+        [Required, Display(Name = "Nome do Artigo")]
+        public string Nome { get; set; }
+
+        [Required, Display(Name = "Imagem")]
+        [StringLength(2000)]
+        public string ImagemURL { get; set; }
+
+        [Required, Display(Name = "Descrição")]
+        public string Descricao { get; set; }
+
+        [Required, Display(Name = "Tipo de Peça")]
+        public tipoPeca Tipo { get; set; }
+
+        [Display(Name = "Origem")]
+        public string Origem { get; set; }
+
+        [Display(Name = "Ano que foi Descoberto")]
+        public DateTime? AnoDescoberto { get; set; }
+
+        [Display(Name = "Zona onde foi descoberto")]
+        public string ZonaDescoberto { get; set; }
+
+    }
+
+    public enum tipoPeca : byte
+    {
+        Desconhecido = 0,
+        Pintura = 1,
+        Escultura = 2,
+        Artefacto = 3,
+        Fossil = 4
+
     }
 }

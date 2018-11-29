@@ -7,8 +7,16 @@
         <nav id="menu" class="d-none d-lg-block">
             <ul>
                 <li class="has-child">
-                    @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage"})
+                    
+                    @Html.Raw(String.Format("<a href=\"#\" class = 'selected' >{0}</a>", @User.Identity.GetUserName()))
+                    @*@Html.ActionLink(User.Identity.GetUserName(), "", "", routeValues: null, htmlAttributes: new {title = "Manage"})*@
                     <ul class="sub-menu">
+                        @if (User.IsInRole("Administrador") || User.IsInRole("Especialista"))
+                        {
+                            <li>@Html.ActionLink("Manage Artigos", "Index", "Artigos", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                            <li>@Html.ActionLink("Manage Accounts", "Index", "Users", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                        }
+                        <li>@Html.ActionLink("Manage My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                         <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                     </ul>
                 </li>
