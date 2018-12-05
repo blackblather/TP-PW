@@ -4,57 +4,55 @@
     ViewBag.Title = "Log in";
 }
 
-
-<div class="row" style="background-color: #f3f3f3">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-box", role = "form", style = "margin: 25px" }))
+<div class="container">
+    <div class="row" style="background-color: #f3f3f3">
+        <div class="col-sm-12">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-box", role = "form", style = "margin: 25px" }))
         {
-            @Html.AntiForgeryToken()
-            <div class="form-top">
-                <div class="form-top-left">
-                    <h3>Login to our site</h3>
-                    <p>Enter username and password to log on:</p>
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
-                </div>
-                <div class="form-top-right">
-                    <i class="fa fa-pencil"></i>
-                </div>
-
-            </div>
-
-            <div class="form-bottom">
-                <form role="form" action="" method="post" class="registration-form">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, new { @class = "sr-only", @for = "form-username" })
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-username form-control", @name = "form-username", @placeholder = "Nome de Utilizador...", @id = "form-username" })
+                @Html.AntiForgeryToken()
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>Login to our site</h3>
+                        <p>Enter username and password to log on:</p>
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-top-right">
+                        <i class="fa fa-pencil"></i>
                     </div>
 
-                    <div class="form-group">
+                </div>
 
-                        @Html.LabelFor(m => m.Password, new { @class = "sr-only", @for = "form-password" })
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Password...", @id = "form-password" })
+                <div class="form-bottom">
+                    <form role="form" action="" method="post" class="registration-form">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName, new { @class = "sr-only", @for = "form-username" })
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-username form-control", @name = "form-username", @placeholder = "Nome de Utilizador...", @id = "form-username" })
+                        </div>
+
+                        <div class="form-group">
+
+                            @Html.LabelFor(m => m.Password, new { @class = "sr-only", @for = "form-password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Password...", @id = "form-password" })
 
 
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.RememberMe)
-                                @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.RememberMe)
+                                    @Html.LabelFor(m => m.RememberMe)
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <button type="submit" class="btn">Login</button>
-                </form>
-            </div>
+                        <button type="submit" class="btn">Login</button>
+                    </form>
+                </div>
 
         }
+        </div>
     </div>
-    <div class="col-sm-2"></div>
 </div>
-
 
 
 
