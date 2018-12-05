@@ -19,6 +19,9 @@ namespace TP_PW.Models
 
         [Required]
         public DateTime DataNascimento { get; set; }
+        
+        [Required]
+        public bool Autorizado { get; set; }
 
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
@@ -59,7 +62,8 @@ namespace TP_PW.Models
             modelBuilder.Entity<Artigo>()
                 .HasMany(e => e.Tratamentos)
                 .WithRequired(e => e.Artigo)
-                .HasForeignKey(e => e.IdArtigo);
+                .HasForeignKey(e => e.ArtigoId);
+
                 
 
             modelBuilder.Entity<Emprestimo>()

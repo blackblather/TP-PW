@@ -231,6 +231,10 @@
     <Compile Include="Migrations\201811292242515_stuff.Designer.cs">
       <DependentUpon>201811292242515_stuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812051828010_BoolAutorizado_E_TUFK.cs" />
+    <Compile Include="Migrations\201812051828010_BoolAutorizado_E_TUFK.Designer.cs">
+      <DependentUpon>201812051828010_BoolAutorizado_E_TUFK.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Artigo.cs" />
@@ -452,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811292242515_stuff.resx">
       <DependentUpon>201811292242515_stuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812051828010_BoolAutorizado_E_TUFK.resx">
+      <DependentUpon>201812051828010_BoolAutorizado_E_TUFK.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Migrations.Model;
 using System.Linq;
 using System.Web;
 
@@ -13,14 +14,14 @@ namespace TP_PW.Models
         public int Id { get; set; }
 
         [Required]
-        public int IdArtigo { get; set; }
+        public int ArtigoId { get; set; }
 
         [Required]
         public DateTime Hora { get; set; }
 
         [Required]
         [StringLength(128)]
-        public string IdUtilizador { get; set; }
+        public string UtilizadorId { get; set; }
 
         [Required]
         [Column(TypeName = "text")]
@@ -35,6 +36,7 @@ namespace TP_PW.Models
         public string DescricaoFinal { get; set; }
 
         public virtual Artigo Artigo { get; set; }
+        public virtual ApplicationUser Utilizador { get; set; }
 
     }
 }
