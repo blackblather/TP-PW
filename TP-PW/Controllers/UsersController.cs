@@ -117,23 +117,13 @@ namespace TP_PW.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AdicionarUser(AdicionarUserViewModel model)
+        public ActionResult AdicionarUser(AdicionarUserViewModel model)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-
-
-                if (!IsAdminUser())
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-            else
-            {
+            if (!User.Identity.IsAuthenticated || !IsAdminUser())
                 return RedirectToAction("Index", "Home");
-            }
 
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+
             var user = new ApplicationUser();
             user.PrimeiroNome = model.PrimeiroNome;
             user.Apelido = model.Apelido;
@@ -141,12 +131,10 @@ namespace TP_PW.Controllers
             user.UserName = model.UserName;
             user.Email = model.Email;
             user.PhoneNumber = model.NumTelemovel;
+
             var chkUser = UserManager.Create(user, model.Password);
             if (chkUser.Succeeded)
-            {
-                var result = UserManager.AddToRolesAsync(user.Id, model.UserRole);
-            }
-
+                UserManager.AddToRoles(user.Id, model.UserRole);
 
             return RedirectToAction("Index");
         }
