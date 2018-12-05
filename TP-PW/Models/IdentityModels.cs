@@ -17,6 +17,7 @@ namespace TP_PW.Models
         [Required]
         public string Apelido { get; set; }
 
+        [Required]
         public DateTime DataNascimento { get; set; }
 
 
