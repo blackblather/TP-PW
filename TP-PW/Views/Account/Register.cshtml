@@ -2,59 +2,72 @@
 @{
     ViewBag.Title = "Register";
 }
-<div class="row" style="background-color: #f3f3f3">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
-        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-box", role = "form", style="margin: 25px" }))
-        {
-            @Html.AntiForgeryToken()
-            <div class="form-top">
-                <div class="form-top-left">
-                    <h3>Sign up now</h3>
-                    <p>Fill in the form below to get instant access:</p>
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
+<div class="container">
+    <div class="row" style="background-color: #f3f3f3">
+        <div class="col-sm-8 col-sm-offset-2">
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-box", role = "form", style = "margin: 25px" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-top">
+                    <div class="form-top-left">
+                        <h3>Sign up now</h3>
+                        <p>Fill in the form below to get instant access:</p>
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-top-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+
                 </div>
-                <div class="form-top-right">
-                    <i class="fa fa-pencil"></i>
+
+                <div class="form-bottom">
+                    <form role="form" action="" method="post" class="registration-form">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.UserName, new { @class = "sr-only", @for = "form-username" })
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-username form-control", @name = "form-username", @placeholder = "Username...", @id = "form-username" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PrimeiroNome, new { @class = "sr-only", @for = "form-primeiro-nome" })
+                            @Html.TextBoxFor(m => m.PrimeiroNome, new { @class = "form-control", @name = "form-primeiro-nome", @placeholder = "Primeiro Nome..." })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Apelido, new { @class = "sr-only", @for = "form-apelido" })
+                            @Html.TextBoxFor(m => m.Apelido, new { @class = "form-control", @name = "form-apelido", @placeholder = "Apelido..." })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Email, new { @class = "sr-only", @for = "form-email" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-email form-control", @name = "form-email", @placeholder = "Email...", @id = "form-email" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.DataNascimento, new { @class = "sr-only" })
+                            <div class="col-md-10 ui-datepicker">
+                                @Html.JQueryUI().DatepickerFor(m => m.DataNascimento, new { @class = "ui-datepicker" })
+                                @Html.ValidationMessageFor(m => m.DataNascimento)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Password, new { @class = "sr-only", @for = "form-password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Password...", @id = "form-password" })
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "sr-only", @for = "form-confirma-password" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-password form-control", @name = "form-confirma-password", @placeholder = "Confirmar Password...", @id = "form-confirma-password" })
+                        </div>
+
+                        <button type="submit" class="btn">Registar</button>
+                    </form>
                 </div>
 
-            </div>
-
-            <div class="form-bottom">
-                <form role="form" action="" method="post" class="registration-form">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, new { @class = "sr-only", @for = "form-username" })
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-username form-control", @name = "form-username", @placeholder = "Nome de Utilizador...", @id = "form-username" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "sr-only", @for = "form-email" })
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-email form-control", @name = "form-email", @placeholder = "Email...", @id = "form-email" })
-                    </div>
-
-                    <div class="form-group">
-
-                        @Html.LabelFor(m => m.Password, new { @class = "sr-only", @for = "form-password" })
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Password...", @id = "form-password" })
-
-
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "sr-only", @for = "form-password" })
-
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Confirmar Password...", @id = "form-password" })
-
-                    </div>
-
-                    <button type="submit" class="btn">Registar</button>
-                </form>
-            </div>
-
-        }
+            }
+        </div>
     </div>
-    <div class="col-sm-2"></div>
 </div>
-
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
