@@ -93,7 +93,7 @@ namespace TP_PW.Models
 
         [Required]
         [Display(Name = "Data de Nascimento")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd}")]
         public DateTime DataNascimento { get; set; }
 
         [Required]
@@ -111,6 +111,19 @@ namespace TP_PW.Models
         [Required]
         [Display(Name = "UserName")]
         public string UserName { get; set; }
+
+        [Required]
+        [Display(Name = "Primeiro Nome")]
+        public string PrimeiroNome { get; set; }
+
+        [Required]
+        [Display(Name = "Apelido")]
+        public string Apelido { get; set; }
+
+        [Required]
+        [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd}")]
+        public DateTime DataNascimento { get; set; }
 
         [Required]
         [EmailAddress]
