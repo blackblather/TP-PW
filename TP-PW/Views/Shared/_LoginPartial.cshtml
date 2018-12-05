@@ -4,32 +4,24 @@
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
     {
         @Html.AntiForgeryToken()
-        <nav id="menu" class="d-none d-lg-block">
-            <ul>
-                <li class="has-child">
+        <li class="has-child">
                     
-                    @Html.Raw(String.Format("<a href=\"#\" class = 'selected' >{0}</a>", @User.Identity.GetUserName()))
-                    @*@Html.ActionLink(User.Identity.GetUserName(), "", "", routeValues: null, htmlAttributes: new {title = "Manage"})*@
-                    <ul class="sub-menu">
-                        @if (User.IsInRole("Administrador") || User.IsInRole("Especialista"))
-                        {
-                            <li>@Html.ActionLink("Manage Artigos", "Index", "Artigos", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                            <li>@Html.ActionLink("Manage Accounts", "Index", "Users", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                        }
-                        <li>@Html.ActionLink("Manage My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-                        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-                    </ul>
-                </li>
+            @Html.Raw(String.Format("<a href='#' >{0}</a>", @User.Identity.GetUserName()))
+            @*@Html.ActionLink(User.Identity.GetUserName(), "", "", routeValues: null, htmlAttributes: new {title = "Manage"})*@
+            <ul class="sub-menu">
+                @if (User.IsInRole("Administrador") || User.IsInRole("Especialista"))
+                {
+                    <li>@Html.ActionLink("Manage Artigos", "Index", "Artigos", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                    <li>@Html.ActionLink("Manage Accounts", "Index", "Users", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                }
+                <li>@Html.ActionLink("Manage My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()">Logout</a></li>
             </ul>
-        </nav>
+        </li>
     }
 }
 else
 {
-    <ul class="list-inline">
-
-        <li class="list-inline-item">@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li class="list-inline-item">  |  </li>
-        <li class="list-inline-item">@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+    <li>@Html.ActionLink("Login", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    <li>@Html.ActionLink("Registo", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
 }
