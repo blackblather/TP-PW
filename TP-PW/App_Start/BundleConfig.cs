@@ -8,7 +8,7 @@ namespace TP_PW
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+            /*bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -35,7 +35,26 @@ namespace TP_PW
                 "~/Content/themes/base/jquery.ui.core.css",
                 "~/Content/themes/base/jquery.ui.datepicker.css",
                 "~/Content/themes/base/jquery.ui.theme.css"));
+                */
 
+            /*CUSTOM STYLE BUNDLE*/
+            bundles.Add(new StyleBundle("~/Content/templateStyles").Include("~/Content/owl.carousel.css",
+                                                              "~/Content/barfiller.css",
+                                                              "~/Content/animate.css",
+                                                              "~/Content/font-awesome.min.css",
+                                                              "~/Content/bootstrap.min.css",
+                                                              "~/Content/slicknav.css",
+                                                              "~/Content/main.css"));
+            /*CUSTOM SCRIPT BUNDLE*/
+            bundles.Add(new ScriptBundle("~/Scripts/templateScripts").Include("~/Scripts/jquery-2.2.4.min.js",
+                                                                              "~/Scripts/vendor/popper.min.js",
+                                                                              "~/Scripts/vendor/bootstrap.min.js",
+                                                                              "~/Scripts/vendor/owl.carousel.min.js",
+                                                                              "~/Scripts/vendor/isotope.pkgd.min.js",
+                                                                              "~/Scripts/vendor/jquery.barfiller.js",
+                                                                              "~/Scripts/vendor/loopcounter.js",
+                                                                              "~/Scripts/vendor/slicknav.min.js",
+                                                                              "~/Scripts/active.js"));
         }
     }
 }
