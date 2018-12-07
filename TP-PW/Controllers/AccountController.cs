@@ -154,7 +154,12 @@ namespace TP_PW.Controllers
                 //System.Data.Entity.Validation.DbEntityValidationException
                 try
                 {
-                    var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, PrimeiroNome = model.PrimeiroNome, Apelido = model.Apelido };
+                    var user = new ApplicationUser { UserName = model.UserName,
+                        Email = model.Email,
+                        PrimeiroNome = model.PrimeiroNome,
+                        Apelido = model.Apelido,
+                        DataNascimento = model.DataNascimento,
+                        Autorizado = false};
 
                     var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -173,12 +178,8 @@ namespace TP_PW.Controllers
                         return RedirectToAction("Index", "Home");
                     }
                     AddErrors(result);
-                } catch(System.Data.Entity.Validation.DbEntityValidationException e) {
-                    foreach (var eve in e.EntityValidationErrors) {
-                        Console.WriteLine("Entity of type \"{0}\" in state \"{1}\" has the following validation errors:", eve.Entry.Entity.GetType().Name, eve.Entry.State);
-                        foreach (var ve in eve.ValidationErrors)
-                            Console.WriteLine("- Property: \"{0}\", Error: \"{1}\"", ve.PropertyName, ve.ErrorMessage);
-                    }
+                } catch(Exception e) {
+                    return View();
                 }
             }
 
