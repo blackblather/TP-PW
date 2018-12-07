@@ -21,33 +21,28 @@
 
                 </div>
 
-                <div class="form-bottom">
-                    <form role="form" action="" method="post" class="registration-form">
+                <div>
+                   
                         <div class="form-group">
-                            @Html.LabelFor(m => m.UserName, new { @class = "sr-only", @for = "form-username" })
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-username form-control", @name = "form-username", @placeholder = "Username...", @id = "form-username" })
+                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username..."})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.PrimeiroNome, new { @class = "sr-only", @for = "form-primeiro-nome" })
-                            @Html.TextBoxFor(m => m.PrimeiroNome, new { @class = "form-control", @name = "form-primeiro-nome", @placeholder = "Primeiro Nome..." })
+                            @Html.TextBoxFor(m => m.PrimeiroNome, new { @class = "form-control", @placeholder = "Primeiro Nome..." })
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Apelido, new { @class = "sr-only", @for = "form-apelido" })
-                            @Html.TextBoxFor(m => m.Apelido, new { @class = "form-control", @name = "form-apelido", @placeholder = "Apelido..." })
+                            @Html.TextBoxFor(m => m.Apelido, new { @class = "form-control", @placeholder = "Apelido..." })
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Email, new { @class = "sr-only", @for = "form-email" })
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-email form-control", @name = "form-email", @placeholder = "Email...", @id = "form-email" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email..."})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.DataNascimento, new { @class = "sr-only" })
-                            <div class="form-group" id="DataNascimento">
+                            <div class="form-group" >
                                 <div class="input-group">
-                                    @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control", @name = "form-birthday", @placeholder = "Data de nascimento..." })
+                                    @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control", @placeholder = "Data de nascimento..." })
                                     <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                                 </div>
                             </div>
@@ -55,17 +50,15 @@
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.Password, new { @class = "sr-only", @for = "form-password" })
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-password form-control", @name = "form-password", @placeholder = "Password...", @id = "form-password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password..."})
                         </div>
 
                         <div class="form-group">
-                            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "sr-only", @for = "form-confirma-password" })
-                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-password form-control", @name = "form-confirma-password", @placeholder = "Confirmar Password...", @id = "form-confirma-password" })
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Password..."})
                         </div>
 
                         <button type="submit" class="btn">Registar</button>
-                    </form>
+                  
                 </div>
 
             }
