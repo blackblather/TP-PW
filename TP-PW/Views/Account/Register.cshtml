@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Register";
 }
+
 <div class="container">
     <div class="row" style="background-color: #f3f3f3">
         <div class="col-sm-8 col-sm-offset-2">
@@ -44,10 +45,13 @@
 
                         <div class="form-group">
                             @Html.LabelFor(m => m.DataNascimento, new { @class = "sr-only" })
-                            <div class="col-md-10 ui-datepicker">
-                                @Html.JQueryUI().DatepickerFor(m => m.DataNascimento, new { @class = "ui-datepicker" })
-                                @Html.ValidationMessageFor(m => m.DataNascimento)
+                            <div class="form-group" id="DataNascimento">
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control", @name = "form-birthday", @placeholder = "Data de nascimento..." })
+                                    <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                </div>
                             </div>
+                            
                         </div>
 
                         <div class="form-group">
