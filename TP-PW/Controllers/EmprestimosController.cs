@@ -10,107 +10,107 @@ using TP_PW.Models;
 
 namespace TP_PW.Controllers
 {
-    public class ArtigosController : Controller
+    public class EmprestimosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Artigos
+        // GET: Emprestimos
         public ActionResult Index()
         {
-            return View(db.Artigos.ToList());
+            return View(db.Emprestimos.ToList());
         }
 
-        // GET: Artigos/Details/5
+        // GET: Emprestimos/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Artigo artigo = db.Artigos.Find(id);
-            if (artigo == null)
+            Emprestimo emprestimo = db.Emprestimos.Find(id);
+            if (emprestimo == null)
             {
                 return HttpNotFound();
             }
-            return View(artigo);
+            return View(emprestimo);
         }
 
-        // GET: Artigos/Create
+        // GET: Emprestimos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Artigos/Create
+        // POST: Emprestimos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nome,Descricao,ImagemURL,Tipo,Origem,AnoDescoberto,ZonaDescoberto")] Artigo artigo)
+        public ActionResult Create([Bind(Include = "Id,IdUtilizador,IdEstado,DataEmprestimo")] Emprestimo emprestimo)
         {
             if (ModelState.IsValid)
             {
-                db.Artigos.Add(artigo);
+                db.Emprestimos.Add(emprestimo);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(artigo);
+            return View(emprestimo);
         }
 
-        // GET: Artigos/Edit/5
+        // GET: Emprestimos/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Artigo artigo = db.Artigos.Find(id);
-            if (artigo == null)
+            Emprestimo emprestimo = db.Emprestimos.Find(id);
+            if (emprestimo == null)
             {
                 return HttpNotFound();
             }
-            return View(artigo);
+            return View(emprestimo);
         }
 
-        // POST: Artigos/Edit/5
+        // POST: Emprestimos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nome,Descricao,ImagemURL,Tipo,Origem,AnoDescoberto,ZonaDescoberto")] Artigo artigo)
+        public ActionResult Edit([Bind(Include = "Id,IdUtilizador,IdEstado,DataEmprestimo")] Emprestimo emprestimo)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(artigo).State = EntityState.Modified;
+                db.Entry(emprestimo).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(artigo);
+            return View(emprestimo);
         }
 
-        // GET: Artigos/Delete/5
+        // GET: Emprestimos/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Artigo artigo = db.Artigos.Find(id);
-            if (artigo == null)
+            Emprestimo emprestimo = db.Emprestimos.Find(id);
+            if (emprestimo == null)
             {
                 return HttpNotFound();
             }
-            return View(artigo);
+            return View(emprestimo);
         }
 
-        // POST: Artigos/Delete/5
+        // POST: Emprestimos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Artigo artigo = db.Artigos.Find(id);
-            db.Artigos.Remove(artigo);
+            Emprestimo emprestimo = db.Emprestimos.Find(id);
+            db.Emprestimos.Remove(emprestimo);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

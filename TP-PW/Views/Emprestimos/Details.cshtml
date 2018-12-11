@@ -1,0 +1,42 @@
+﻿@model TP_PW.Models.Emprestimo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Emprestimo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IdUtilizador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdUtilizador)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataEmprestimo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataEmprestimo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
