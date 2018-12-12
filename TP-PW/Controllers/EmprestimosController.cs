@@ -15,9 +15,14 @@ namespace TP_PW.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Emprestimos
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.Emprestimos.ToList());
+            if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
+                return View(db.Emprestimos.ToList());
+            else
+                return RedirectToAction("Index", "Home");
+
         }
 
         // GET: Emprestimos/Details/5
