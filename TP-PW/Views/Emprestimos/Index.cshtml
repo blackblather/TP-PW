@@ -1,45 +1,52 @@
 ﻿@model IEnumerable<TP_PW.Models.Emprestimo>
-
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Empréstimos";
 }
+@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{
+    <div class="container">
+    <h2>Empréstimos</h2>
+    @if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
+    {
+        <p>
+            @Html.ActionLink("Adicionar Emprestimo", "Create")
+        </p>
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdUtilizador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdEstado)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataEmprestimo)
+                </th>
+                <th></th>
+            </tr>
 
-<h2>Index</h2>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdUtilizador)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdEstado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataEmprestimo)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.IdUtilizador)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IdEstado)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DataEmprestimo)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdUtilizador)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IdEstado)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DataEmprestimo)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
+        </table>
+    }
+    </div>
 }
-
-</table>
