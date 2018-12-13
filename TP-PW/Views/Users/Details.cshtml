@@ -25,21 +25,13 @@
         <dd>
             @Html.DisplayFor(model => model.Apelido)
         </dd>
-
+            @Html.Raw(ViewBag.role)
         <dt>
             @Html.DisplayNameFor(model => model.DataNascimento)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Autorizado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Autorizado)
         </dd>
 
         <dt>
