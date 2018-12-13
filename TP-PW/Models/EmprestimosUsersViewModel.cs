@@ -11,10 +11,10 @@
         public Emprestimo emprestimo { get; set; }
         public ApplicationUser utilizador { get; set; }
         
-        public EmprestimosUsersViewModel(Emprestimo emp, ApplicationUser usr)
+        /*public EmprestimosUsersViewModel(Emprestimo emp, ApplicationUser usr)
         {
             emprestimo = emp;
             utilizador = usr;
-        }
+        }*/
     }
 }
