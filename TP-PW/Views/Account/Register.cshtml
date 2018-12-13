@@ -5,7 +5,8 @@
 
 <div class="container">
     <div class="row" style="background-color: #f3f3f3">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 border border-white rounded" style="margin: 1rem;">
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-box", role = "form", style = "margin: 25px" }))
             {
                 @Html.AntiForgeryToken()
@@ -22,47 +23,48 @@
                 </div>
 
                 <div>
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username..." })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.PrimeiroNome, new { @class = "form-control", @placeholder = "Primeiro Nome..." })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Apelido, new { @class = "form-control", @placeholder = "Apelido..." })
+                    </div>
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email..." })
+                    </div>
+
                    
+                    <div class="form-group">
                         <div class="form-group">
-                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username..."})
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextBoxFor(m => m.PrimeiroNome, new { @class = "form-control", @placeholder = "Primeiro Nome..." })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextBoxFor(m => m.Apelido, new { @class = "form-control", @placeholder = "Apelido..." })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email..."})
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-group" >
-                                <div class="input-group">
-                                    @Html.TextBoxFor(m => m.DataNascimento, new { @class = "form-control", @placeholder = "Data de nascimento..." })
-                                    <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                </div>
+                            <div class="input-group">
+                                @Html.EditorFor(m => m.DataNascimento, new { htmlAttributes = new { @class = "form-control", @placeholder = "Data de nascimento..." }})
+                                <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                             </div>
-                            
                         </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password..." })
+                    </div>
 
-                        <div class="form-group">
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password..."})
-                        </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Password..." })
+                    </div>
 
-                        <div class="form-group">
-                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Confirmar Password..."})
-                        </div>
+                    <button type="submit" class="btn btn-info">Registar</button>
 
-                        <button type="submit" class="btn btn-info">Registar</button>
-                  
                 </div>
 
             }
         </div>
+        <div class="col-md-3"></div>
     </div>
 </div>
     @section Scripts {
