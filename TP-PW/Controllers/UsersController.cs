@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -95,10 +96,25 @@ namespace TP_PW.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser applicationUser = db.Users.Find(id);
+
+            var roles = db.Roles.ToList();
+          
+            foreach (var r in roles)
+            {
+                foreach (var ar in applicationUser.Roles)
+                {
+                    if (ar.RoleId == r.Id)
+                        ViewBag.Role = r.Name;
+                }
+            }
+            
+
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
+
+            
             return View(applicationUser);
         }
 
@@ -161,6 +177,9 @@ namespace TP_PW.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             ApplicationUser applicationUser = db.Users.Find(id);
+          
+            
+            
             if (applicationUser == null)
             {
                 return HttpNotFound();
@@ -218,5 +237,182 @@ namespace TP_PW.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+
+
+
+        // Roles
+        // 
+        // https://andersnordby.wordpress.com/2014/11/28/asp-net-mvc-4-5-owin-simple-roles-management/
+        //
+
+        [Authorize(Roles = "Administrador")]
+        public ActionResult RoleAddToUser(string id)
+        {
+            List<string> roles;
+            List<string> users;
+            ApplicationUser applicationUser;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+                applicationUser = userManager.FindById(id);
+                users = (from u in userManager.Users where u.Id == id select u.UserName).ToList();
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Users = new SelectList(users);
+            ViewBag.Id = id;
+            return View();
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RoleAddToUser(string roleName, string userName)
+        {
+            List<string> roles;
+            List<string> users;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                users = (from u in userManager.Users select u.UserName).ToList();
+
+                var user = userManager.FindByName(userName);
+                if (user == null)
+                    throw new Exception("User not found!");
+
+                var role = roleManager.FindByName(roleName);
+                if (role == null)
+                    throw new Exception("Role not found!");
+
+                if (userManager.IsInRole(user.Id, role.Name))
+                {
+                    ViewBag.ResultMessage = "This user already has the role specified !";
+                }
+                else
+                {
+                    userManager.AddToRole(user.Id, role.Name);
+                    context.SaveChanges();
+
+                    ViewBag.ResultMessage = "Username added to the role succesfully !";
+                }
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Users = new SelectList(users);
+            return View();
+        }
+
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult GetRole(string userName)
+        {
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                List<string> userRoles;
+                List<string> roles;
+                List<string> users;
+                ApplicationUser applicationUser;
+                using (var context = new ApplicationDbContext())
+                {
+                    var roleStore = new RoleStore<IdentityRole>(context);
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                    roles = (from r in roleManager.Roles select r.Name).ToList();
+
+                    var userStore = new UserStore<ApplicationUser>(context);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+
+                    //users = (from u in userManager.Users select u.UserName).ToList();
+                    users = (from u in userManager.Users where u.UserName == userName select u.UserName).ToList();
+                    applicationUser = userManager.FindByName(userName);
+                    //var user = userManager.FindByName(userName);
+                    if (applicationUser == null)
+                        throw new Exception("User not found!");
+
+                    var userRoleIds = (from r in applicationUser.Roles select r.RoleId);
+                    userRoles = (from id in userRoleIds
+                                 let r = roleManager.FindById(id)
+                                 select r.Name).ToList();
+                }
+
+                ViewBag.Roles = new SelectList(roles);
+                ViewBag.Users = new SelectList(users);
+                ViewBag.RolesForThisUser = userRoles;
+            }
+
+            return View("RoleAddToUser");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrador")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteRoleForUser(string userName, string roleName)
+        {
+            List<string> userRoles;
+            List<string> roles;
+            List<string> users;
+            ApplicationUser applicationUser;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
+
+                roles = (from r in roleManager.Roles select r.Name).ToList();
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                //users = (from u in userManager.Users select u.UserName).ToList();
+                users = (from u in userManager.Users where u.UserName == userName select u.UserName).ToList();
+                var user = userManager.FindByName(userName);
+                //applicationUser = userManager.FindByName(userName);
+                if (user == null)
+                    throw new Exception("User not found!");
+
+                if (userManager.IsInRole(user.Id, roleName))
+                {
+                    userManager.RemoveFromRole(user.Id, roleName);
+                    context.SaveChanges();
+
+                    ViewBag.ResultMessage = "Role removed from this user successfully !";
+                }
+                else
+                {
+                    ViewBag.ResultMessage = "This user doesn't belong to selected role.";
+                }
+
+                var userRoleIds = (from r in user.Roles select r.RoleId);
+                userRoles = (from id in userRoleIds
+                             let r = roleManager.FindById(id)
+                             select r.Name).ToList();
+            }
+
+            ViewBag.Roles = new SelectList(roles);
+            ViewBag.Users = new SelectList(users);
+            ViewBag.RolesForThisUser = userRoles;
+            return View("RoleAddToUser");
+        }
+
+
+
+
+
+
     }
 }

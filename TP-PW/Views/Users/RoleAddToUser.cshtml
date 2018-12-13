@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "RoleAddToUser";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 border border-white rounded" style="margin: 1rem; padding: 1rem;">
+
+            <input type="button" class="btn btn-outline-danger" value="Voltar" onclick="location.href='@Url.Action("Index", "Users")'" />
+
+            <hr />
+            <div class="form-text text-muted">@ViewBag.ResultMessage</div>
+            
+            @using (Html.BeginForm("RoleAddToUser", "Users"))
+            {
+
+                <h2>Add role to user</h2>
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+               
+
+                <div class="form-group row">
+                    <label for="UserName" class="col-md-3 col-form-label">Username :</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("UserName", ViewBag.Users as SelectList, new { @class = "form-control custom-select mr-md-3" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RoleName" class="col-md-3 col-form-label">Role Name:</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("RoleName", ViewBag.Roles as SelectList, new { @class = "form-control custom-select mr-md-3" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-primary">Adicionar</button>
+                    </div>
+                </div>
+
+            }
+
+            <hr />
+
+            @using (Html.BeginForm("DeleteRoleForUser", "Users"))
+            {
+                <h2>Remove role from user</h2>
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+
+                <div class="form-group row">
+                    <label for="UserName" class="col-md-3 col-form-label">Username :</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("UserName", ViewBag.Users as SelectList, new { @class = "form-control custom-select mr-md-3" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="RoleName" class="col-md-3 col-form-label">Role Name:</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("RoleName", ViewBag.Roles as SelectList, new { @class = "form-control custom-select mr-md-3" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-primary">Apagar</button>
+                    </div>
+                </div>
+            }
+            <hr />
+
+            @using (Html.BeginForm("GetRole", "Users"))
+            {
+                <h2>List roles for user</h2>
+                @Html.AntiForgeryToken()
+                <div class="form-group row">
+                    <label for="UserName" class="col-md-3 col-form-label">Username :</label>
+                    <div class="col-md-6">
+                        @Html.DropDownList("UserName", ViewBag.Users as SelectList, new { @class = "form-control custom-select mr-md-3" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-10">
+                        <button type="submit" class="btn btn-primary">Mostrar</button>
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.RolesForThisUser != null)
+            {
+                <text>
+                    <h3>Roles for this user </h3>
+                    <ul class="list-group list-group-flush ">
+                        @foreach (string s in ViewBag.RolesForThisUser)
+                        {
+                            <li class="list-group-item form-control" style="background-color: #f3f3f3 !important;">@s</li>
+                        }
+                    </ul>
+                </text>
+            }
+            <div class="col-md-3"></div>
+        </div>
+            </div>
+</div>
