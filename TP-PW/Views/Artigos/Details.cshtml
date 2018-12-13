@@ -9,66 +9,69 @@
 <div>
     <h4>Artigo</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
+    <div class="container">
+        <div class="row" style="margin-bottom: 1rem !important;">
+            <div class="col-md-8 ">
+                <img src="@Html.DisplayFor(model => model.ImagemURL)" />
+            </div>
+            <div class="col-md-4">
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Nome)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Nome)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descricao)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Descricao)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ImagemURL)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ImagemURL)
-        </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Tipo)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Tipo)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Tipo)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Tipo)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Origem)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Origem)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Origem)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.Origem)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AnoDescoberto)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.AnoDescoberto)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.AnoDescoberto)
-        </dd>
+                    <dd>
+                        @Html.DisplayFor(model => model.AnoDescoberto)
+                    </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ZonaDescoberto)
-        </dt>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ZonaDescoberto)
+                    </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.ZonaDescoberto)
-        </dd>
-
-    </dl>
+                    <dd>
+                        @Html.DisplayFor(model => model.ZonaDescoberto)
+                    </dd>
+                    <p>
+                        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                        @Html.ActionLink("Back to List", "Index")
+                    </p>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
