@@ -25,17 +25,30 @@ namespace TP_PW.Controllers
                 {
                     //Source #1: https://forums.asp.net/t/1959723.aspx?ASP+MVC5+Identity+How+to+get+current+ApplicationUser
                     string currentUserId = User.Identity.GetUserId();
-                    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+                    ApplicationUser currentUser = db.Users.FirstOrDefault(usr => usr.Id == currentUserId);
 
+                    /*OLD VERSION*/
                     //Source #2: https://www.oficinadanet.com.br/artigo/asp.net/fazendo-inner-join-e-left-join-com-linq-no-aspnet
-                    var list = from emp in db.Emprestimos
+                    /*var list = from emp in db.Emprestimos 
                                join usr in db.Users on emp.IdUtilizador equals usr.Id
                                where usr.Id == currentUserId
-                               select emp;
+                               select emp;*/
 
-                    return View(list);
+                    /*NEW VERSION*/
+                    //Source #3: https://stackoverflow.com/questions/2767709/join-where-with-linq-and-lambda
+                    //Source #4: https://stackoverflow.com/questions/13692015/how-to-rewrite-this-linq-using-join-with-lambda-expressions
+                    var list2 = db.Emprestimos
+                        .Join(db.Users,
+                              emp => emp.IdUtilizador,
+                              usr => usr.Id,
+                              (emp,usr) => new EmprestimosUsersViewModel(emp, usr))
+                        .Where(empUsr => empUsr.utilizador.Id == currentUserId)
+                        .ToList();
+
+                    return View(list2);
                 }
                 else
+                    //Not working now because im doint that lambda stuff
                     return View(db.Emprestimos.ToList());
             }
             else
