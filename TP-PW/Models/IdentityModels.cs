@@ -21,9 +21,6 @@ namespace TP_PW.Models
         [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
         
-        [Required]
-        public bool Autorizado { get; set; }
-
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -87,6 +84,6 @@ namespace TP_PW.Models
             return new ApplicationDbContext();
         }
 
-        
+        //public System.Data.Entity.DbSet<TP_PW.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
 }
