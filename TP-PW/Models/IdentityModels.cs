@@ -18,7 +18,6 @@ namespace TP_PW.Models
         public string Apelido { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
         public DateTime DataNascimento { get; set; }
         
 

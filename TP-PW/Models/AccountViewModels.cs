@@ -95,7 +95,7 @@ namespace TP_PW.Models
 
         [Required]
         [Display(Name = "Data de Nascimento")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-mm-yyyy}")]
         public DateTime DataNascimento { get; set; }
 
         [Required]
@@ -124,8 +124,7 @@ namespace TP_PW.Models
 
         [Required]
         [Display(Name = "Data de Nascimento")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd-mm-yyyy}")]
         public DateTime DataNascimento { get; set; }
 
         [Required]
