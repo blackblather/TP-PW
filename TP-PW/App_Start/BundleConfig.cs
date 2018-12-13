@@ -13,7 +13,7 @@ namespace TP_PW
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
-
+            
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -44,8 +44,10 @@ namespace TP_PW
                                                               "~/Content/font-awesome.min.css",
                                                               "~/Content/bootstrap.min.css",
                                                               "~/Content/slicknav.css",
+                                                              "~/Content/magnific.popup.css",
                                                               "~/Content/main.css"));
             bundles.Add(new StyleBundle("~/Content/datepickerStyles").Include("~/Content/datepicker/datepicker.min.css"));
+
             /*CUSTOM SCRIPT BUNDLE*/
             bundles.Add(new ScriptBundle("~/Scripts/templateScripts").Include("~/Scripts/jquery-2.2.4.min.js",
                                                                               "~/Scripts/vendor/popper.min.js",
@@ -56,6 +58,7 @@ namespace TP_PW
                                                                               "~/Scripts/vendor/loopcounter.js",
                                                                               "~/Scripts/vendor/slicknav.min.js",
                                                                               "~/Scripts/active.js"));
+
             bundles.Add(new ScriptBundle("~/Scripts/datepickerScripts").Include("~/Scripts/datepicker/datepicker.min.js",
                                                                                 "~/Scripts/datepicker/datepicker.pt-BR.js"));
         }
