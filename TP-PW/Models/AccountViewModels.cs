@@ -11,6 +11,8 @@ namespace TP_PW.Models
         public string Email { get; set; }
     }
 
+ 
+
     public class ExternalLoginListViewModel
     {
         public string ReturnUrl { get; set; }
@@ -106,7 +108,7 @@ namespace TP_PW.Models
     {
 
         [Required]
-        public string UserRole { get; set; } = "Utilizador";
+        public string UserRole { get; set; } = "PorPermitir";
 
         [Required]
         [Display(Name = "UserName")]
@@ -122,6 +124,7 @@ namespace TP_PW.Models
 
         [Required]
         [Display(Name = "Data de Nascimento")]
+        [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-mm-dd}")]
         public DateTime DataNascimento { get; set; }
 
