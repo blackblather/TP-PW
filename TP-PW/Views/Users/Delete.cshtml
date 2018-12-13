@@ -4,30 +4,44 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>ApplicationUser</h4>
-    <hr />
-    <dl class="dl-horizontal">
-         
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 border border-white rounded" style="margin: 1rem; padding-top: 1rem">
+            <h2>Eliminar</h2>
+            <hr />
+            <h4>Tem a certeza que quer eliminar este utilizador?</h4>
+            <div>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
+                <hr />
+                @using (Html.BeginForm())
+                {
+                    
 
-    </dl>
+                    @Html.AntiForgeryToken()
+                  
+                    <div class="form-group row">
+                        <label for="UserName" class="col-md-6 col-form-label">Nome do Utilizador :</label>
+                        <div class="col-md-6">
+                            @Html.DisplayFor(model => model.PrimeiroNome, new { @class = "form-control" })
+                            @Html.DisplayFor(model => model.Apelido, new { @class = "form-control" })    
+                        </div>
+                    </div>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                    <div class="form-group row">
+                        <div class="col-md-10">
+                            <button type="submit" class="btn btn-primary">Apagar</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="location.href='@Url.Action("Index", "Users")'">Cancelar</button>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-    }
+        <div class="col-md-3"></div>
+    </div>
 </div>
+
+
+
+
