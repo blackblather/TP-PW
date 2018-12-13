@@ -62,6 +62,13 @@ namespace TP_PW
                 role.Name = "Utilizador";
                 roleManager.Create(role);
             }
+            // Cria o role de PorPermitir
+            if (!roleManager.RoleExists("PorPermitir"))
+            {
+                var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                role.Name = "PorPermitir";
+                roleManager.Create(role);
+            }
         }
     }
 }
