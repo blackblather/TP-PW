@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -19,7 +20,24 @@ namespace TP_PW.Controllers
         public ActionResult Index()
         {
             if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
-                return View(db.Emprestimos.ToList());
+            {
+                if (User.IsInRole("Utilizador"))
+                {
+                    //Source #1: https://forums.asp.net/t/1959723.aspx?ASP+MVC5+Identity+How+to+get+current+ApplicationUser
+                    string currentUserId = User.Identity.GetUserId();
+                    ApplicationUser currentUser = db.Users.FirstOrDefault(x => x.Id == currentUserId);
+
+                    //Source #2: https://www.oficinadanet.com.br/artigo/asp.net/fazendo-inner-join-e-left-join-com-linq-no-aspnet
+                    var list = from emp in db.Emprestimos
+                               join usr in db.Users on emp.IdUtilizador equals usr.Id
+                               where usr.Id == currentUserId
+                               select emp;
+
+                    return View(list);
+                }
+                else
+                    return View(db.Emprestimos.ToList());
+            }
             else
                 return RedirectToAction("Index", "Home");
 
