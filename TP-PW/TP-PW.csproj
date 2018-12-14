@@ -240,11 +240,17 @@
     <Compile Include="Migrations\201812111518103_ChangeDataTypeToDate.Designer.cs">
       <DependentUpon>201812111518103_ChangeDataTypeToDate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812141209208_Added_EstadoEmprestimos model.cs" />
+    <Compile Include="Migrations\201812141209208_Added_EstadoEmprestimos model.Designer.cs">
+      <DependentUpon>201812141209208_Added_EstadoEmprestimos model.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Artigo.cs" />
     <Compile Include="Models\ArtigosEmprestimo.cs" />
     <Compile Include="Models\Emprestimo.cs" />
+    <Compile Include="Models\EmprestimosViewModel.cs" />
+    <Compile Include="Models\EstadoEmprestimo.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Mensagen.cs" />
@@ -480,6 +486,9 @@
     <EmbeddedResource Include="Migrations\201812111518103_ChangeDataTypeToDate.resx">
       <DependentUpon>201812111518103_ChangeDataTypeToDate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812141209208_Added_EstadoEmprestimos model.resx">
+      <DependentUpon>201812141209208_Added_EstadoEmprestimos model.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -494,7 +503,9 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

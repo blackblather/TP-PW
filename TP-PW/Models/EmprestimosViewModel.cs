@@ -11,5 +11,6 @@
         public Emprestimo emprestimo { get; set; }
         public ApplicationUser utilizador { get; set; }
         public ArtigosEmprestimo artigosEmprestimo { get; set; }
+        public EstadoEmprestimo estadoEmprestimo { get; set; }
     }
 }

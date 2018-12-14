@@ -23,6 +23,8 @@ namespace TP_PW.Models
 
         public int IdEstado { get; set; }
 
+        public EstadoEmprestimo estadoEmprestimo { get; set; }
+
         [Column(TypeName = "date")]
         public DateTime DataEmprestimo { get; set; }
 

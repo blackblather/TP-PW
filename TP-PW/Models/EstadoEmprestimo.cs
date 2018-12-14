@@ -12,5 +12,7 @@ namespace TP_PW.Models
         public int Id { get; set; }
 
         public string Estado { get; set; }
+
+        public virtual ICollection<Emprestimo> Emprestimos { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TP_PW.Models.EmprestimosUsersViewModel>
+﻿@model IEnumerable<TP_PW.Models.EmprestimosViewModel>
 @{
     ViewBag.Title = "Empréstimos";
 }
@@ -15,13 +15,13 @@
         <table class="table">
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.emprestimo.IdUtilizador)
+                    Id Utilizador
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.emprestimo.IdEstado)
+                    Estado
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.emprestimo.DataEmprestimo)
+                    Data
                 </th>
                 <th></th>
             </tr>
@@ -33,15 +33,15 @@
                         @Html.DisplayFor(modelItem => item.emprestimo.IdUtilizador)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.emprestimo.IdEstado)
+                        @Html.DisplayFor(modelItem => item.estadoEmprestimo.Estado)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.emprestimo.DataEmprestimo)
                     </td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.emprestimo.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.emprestimo.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.emprestimo.Id })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.emprestimo.Id }) |
+                        @Html.ActionLink("Detalhes", "Details", new { id = item.emprestimo.Id }) |
+                        @Html.ActionLink("Remover", "Delete", new { id = item.emprestimo.Id })
                     </td>
                 </tr>
             }

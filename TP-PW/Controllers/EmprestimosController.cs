@@ -38,12 +38,12 @@ namespace TP_PW.Controllers
                     //Source #4: https://stackoverflow.com/questions/13692015/how-to-rewrite-this-linq-using-join-with-lambda-expressions
                     //Source #5: https://stackoverflow.com/questions/5207382/get-data-from-two-tablesjoin-with-linq-and-return-result-into-view
                     var list2 = db.Emprestimos
-                        .Join(db.Users,
-                              emp => emp.IdUtilizador,
-                              usr => usr.Id,
-                              (emp,usr) => new { emp, usr })
-                        .Where(empUsr => empUsr.usr.Id == currentUserId)
-                        .Select(empUsr => new EmprestimosViewModel { emprestimo = empUsr.emp, utilizador = empUsr.usr });
+                        .Where(emp => emp.IdUtilizador == currentUserId)
+                        .Join(db.EstadoEmprestimo,
+                              emp => emp.IdEstado,
+                              est => est.Id,
+                              (emp, est) => new EmprestimosViewModel { emprestimo = emp, estadoEmprestimo = est})
+                        .Select(empEst => empEst);
 
                     /*var list3 = from emp in db.Emprestimos
                                join usr in db.Users on emp.IdUtilizador equals usr.Id
