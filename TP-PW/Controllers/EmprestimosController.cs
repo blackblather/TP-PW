@@ -43,7 +43,7 @@ namespace TP_PW.Controllers
                               usr => usr.Id,
                               (emp,usr) => new { emp, usr })
                         .Where(empUsr => empUsr.usr.Id == currentUserId)
-                        .Select(empUsr => new EmprestimosUsersViewModel { emprestimo = empUsr.emp, utilizador = empUsr.usr });
+                        .Select(empUsr => new EmprestimosViewModel { emprestimo = empUsr.emp, utilizador = empUsr.usr });
 
                     /*var list3 = from emp in db.Emprestimos
                                join usr in db.Users on emp.IdUtilizador equals usr.Id
