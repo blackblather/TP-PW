@@ -85,6 +85,7 @@ namespace TP_PW.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
             return View(db.Users.ToList());
         }
 
@@ -95,10 +96,11 @@ namespace TP_PW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser applicationUser = db.Users.Find(id);
 
             var roles = db.Roles.ToList();
-          
+
             foreach (var r in roles)
             {
                 foreach (var ar in applicationUser.Roles)
@@ -107,14 +109,14 @@ namespace TP_PW.Controllers
                         ViewBag.Role = r.Name;
                 }
             }
-            
+
 
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
 
-            
+
             return View(applicationUser);
         }
 
@@ -176,14 +178,16 @@ namespace TP_PW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser applicationUser = db.Users.Find(id);
-          
-            
-            
+
+
+
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
+
             return View(applicationUser);
         }
 
@@ -192,7 +196,9 @@ namespace TP_PW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PrimeiroNome,Apelido,DataNascimento,Autorizado,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include =
+                "Id,PrimeiroNome,Apelido,DataNascimento,Autorizado,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")]
+            ApplicationUser applicationUser)
         {
             if (ModelState.IsValid)
             {
@@ -200,6 +206,7 @@ namespace TP_PW.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+
             return View(applicationUser);
         }
 
@@ -210,11 +217,13 @@ namespace TP_PW.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ApplicationUser applicationUser = db.Users.Find(id);
             if (applicationUser == null)
             {
                 return HttpNotFound();
             }
+
             return View(applicationUser);
         }
 
@@ -235,6 +244,7 @@ namespace TP_PW.Controllers
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -251,8 +261,9 @@ namespace TP_PW.Controllers
         public ActionResult RoleAddToUser(string id)
         {
             List<string> roles;
-            List<string> users;
-            ApplicationUser applicationUser;
+            List<string> userRoles;
+            IEnumerable<string> user;
+
             using (var context = new ApplicationDbContext())
             {
                 var roleStore = new RoleStore<IdentityRole>(context);
@@ -260,15 +271,27 @@ namespace TP_PW.Controllers
 
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
-                applicationUser = userManager.FindById(id);
-                users = (from u in userManager.Users where u.Id == id select u.UserName).ToList();
+
+                user = (from u in userManager.Users where u.Id == id select u.UserName);
                 roles = (from r in roleManager.Roles select r.Name).ToList();
+                var applicationUser = userManager.FindById(id);
+
+                var userRoleIds = (from r in applicationUser.Roles select r.RoleId);
+                userRoles = (from idr in userRoleIds
+                    let r = roleManager.FindById(idr)
+                    select r.Name).ToList();
+
+                if (user.Count() == 1)
+                {
+                    ViewBag.Roles = new SelectList(roles);
+                    ViewBag.RolesForThisUsere = new SelectList(userRoles);
+                    ViewBag.User = user.ElementAt(0);
+                    ViewBag.Id = id;
+                    return View();
+                }
             }
 
-            ViewBag.Roles = new SelectList(roles);
-            ViewBag.Users = new SelectList(users);
-            ViewBag.Id = id;
-            return View();
+            return View("Index");
         }
 
         [Authorize(Roles = "Administrador")]
@@ -277,7 +300,8 @@ namespace TP_PW.Controllers
         public ActionResult RoleAddToUser(string roleName, string userName)
         {
             List<string> roles;
-            List<string> users;
+            IEnumerable<string> user;
+            List<string> userRoles;
             using (var context = new ApplicationDbContext())
             {
                 var roleStore = new RoleStore<IdentityRole>(context);
@@ -286,79 +310,48 @@ namespace TP_PW.Controllers
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
-                users = (from u in userManager.Users select u.UserName).ToList();
+                user = (from u in userManager.Users where u.UserName == userName select u.UserName);
 
-                var user = userManager.FindByName(userName);
-                if (user == null)
-                    throw new Exception("User not found!");
+                var userx = userManager.FindByName(userName);
+                if (userx == null)
+                    throw new Exception("user not found!");
 
                 var role = roleManager.FindByName(roleName);
                 if (role == null)
                     throw new Exception("Role not found!");
 
-                if (userManager.IsInRole(user.Id, role.Name))
+                if (userManager.IsInRole(userx.Id, role.Name))
                 {
                     ViewBag.ResultMessage = "This user already has the role specified !";
                 }
                 else
                 {
-                    userManager.AddToRole(user.Id, role.Name);
+                    userManager.AddToRole(userx.Id, role.Name);
                     context.SaveChanges();
 
                     ViewBag.ResultMessage = "Username added to the role succesfully !";
                 }
 
                 roles = (from r in roleManager.Roles select r.Name).ToList();
-            }
-
-            ViewBag.Roles = new SelectList(roles);
-            ViewBag.Users = new SelectList(users);
-            return View();
-        }
-
-
-        [Authorize(Roles = "Administrador")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult GetRole(string userName)
-        {
-            if (!string.IsNullOrWhiteSpace(userName))
-            {
-                List<string> userRoles;
-                List<string> roles;
-                List<string> users;
-                ApplicationUser applicationUser;
-                using (var context = new ApplicationDbContext())
+                var userRoleIds = (from r in userx.Roles select r.RoleId);
+                userRoles = (from idr in userRoleIds
+                    let r = roleManager.FindById(idr)
+                    select r.Name).ToList();
+                if (user.Count() == 1)
                 {
-                    var roleStore = new RoleStore<IdentityRole>(context);
-                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    ViewBag.Roles = new SelectList(roles);
+                    ViewBag.RolesForThisUsere = new SelectList(userRoles);
+                    ViewBag.User = user.ElementAt(0);
 
-                    roles = (from r in roleManager.Roles select r.Name).ToList();
-
-                    var userStore = new UserStore<ApplicationUser>(context);
-                    var userManager = new UserManager<ApplicationUser>(userStore);
-
-                    //users = (from u in userManager.Users select u.UserName).ToList();
-                    users = (from u in userManager.Users where u.UserName == userName select u.UserName).ToList();
-                    applicationUser = userManager.FindByName(userName);
-                    //var user = userManager.FindByName(userName);
-                    if (applicationUser == null)
-                        throw new Exception("User not found!");
-
-                    var userRoleIds = (from r in applicationUser.Roles select r.RoleId);
-                    userRoles = (from id in userRoleIds
-                                 let r = roleManager.FindById(id)
-                                 select r.Name).ToList();
+                    return View();
                 }
-
-                ViewBag.Roles = new SelectList(roles);
-                ViewBag.Users = new SelectList(users);
-                ViewBag.RolesForThisUser = userRoles;
             }
 
-            return View("RoleAddToUser");
+            return View("Index");
         }
 
+
+        
         [HttpPost]
         [Authorize(Roles = "Administrador")]
         [ValidateAntiForgeryToken]
@@ -366,8 +359,8 @@ namespace TP_PW.Controllers
         {
             List<string> userRoles;
             List<string> roles;
-            List<string> users;
-            ApplicationUser applicationUser;
+            IEnumerable<string> users;
+
             using (var context = new ApplicationDbContext())
             {
                 var roleStore = new RoleStore<IdentityRole>(context);
@@ -378,10 +371,10 @@ namespace TP_PW.Controllers
                 var userStore = new UserStore<ApplicationUser>(context);
                 var userManager = new UserManager<ApplicationUser>(userStore);
 
-                //users = (from u in userManager.Users select u.UserName).ToList();
-                users = (from u in userManager.Users where u.UserName == userName select u.UserName).ToList();
+
+                users = (from u in userManager.Users where u.UserName == userName select u.UserName);
                 var user = userManager.FindByName(userName);
-                //applicationUser = userManager.FindByName(userName);
+
                 if (user == null)
                     throw new Exception("User not found!");
 
@@ -398,21 +391,20 @@ namespace TP_PW.Controllers
                 }
 
                 var userRoleIds = (from r in user.Roles select r.RoleId);
-                userRoles = (from id in userRoleIds
-                             let r = roleManager.FindById(id)
-                             select r.Name).ToList();
+                userRoles = (from idr in userRoleIds
+                    let r = roleManager.FindById(idr)
+                    select r.Name).ToList();
+                if (users.Count() == 1)
+                {
+                    ViewBag.Roles = new SelectList(roles);
+                    ViewBag.RolesForThisUsere = new SelectList(userRoles);
+                    ViewBag.User = users.ElementAt(0);
+
+                    return View("RoleAddToUser");
+                }
             }
 
-            ViewBag.Roles = new SelectList(roles);
-            ViewBag.Users = new SelectList(users);
-            ViewBag.RolesForThisUser = userRoles;
-            return View("RoleAddToUser");
+            return View("Index");
         }
-
-
-
-
-
-
     }
 }
