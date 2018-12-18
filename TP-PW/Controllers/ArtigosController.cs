@@ -20,6 +20,10 @@ namespace TP_PW.Controllers
             return View(db.Artigos.ToList());
         }
 
+        public ActionResult Galeria()
+        {
+            return View(db.Artigos.ToList());
+        }
         // GET: Artigos/Details/5
         public ActionResult Details(int? id)
         {

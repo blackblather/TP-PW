@@ -32,7 +32,8 @@ namespace TP_PW.Models
 
         public string Origem { get; set; }
 
-        public DateTime? AnoDescoberto { get; set; }
+        
+        public int? AnoDescoberto { get; set; }
 
         public string ZonaDescoberto { get; set; }
 
@@ -65,7 +66,7 @@ namespace TP_PW.Models
         public string Origem { get; set; }
 
         [Display(Name = "Ano que foi Descoberto")]
-        public DateTime? AnoDescoberto { get; set; }
+        public int? AnoDescoberto { get; set; }
 
         [Display(Name = "Zona onde foi descoberto")]
         public string ZonaDescoberto { get; set; }
