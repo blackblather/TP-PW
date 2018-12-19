@@ -37,12 +37,12 @@ namespace TP_PW.Controllers
                     //Source #3: https://stackoverflow.com/questions/2767709/join-where-with-linq-and-lambda
                     //Source #4: https://stackoverflow.com/questions/13692015/how-to-rewrite-this-linq-using-join-with-lambda-expressions
                     //Source #5: https://stackoverflow.com/questions/5207382/get-data-from-two-tablesjoin-with-linq-and-return-result-into-view
-                    var list2 = db.Emprestimos
+                    var list = db.Emprestimos
                         .Where(emp => emp.IdUtilizador == currentUserId)
                         .Join(db.EstadoEmprestimo,
                               emp => emp.IdEstado,
                               est => est.Id,
-                              (emp, est) => new EmprestimosViewModel { emprestimo = emp, estadoEmprestimo = est})
+                              (emp, est) => new EmprestimosViewModel { emprestimo = emp, estadoEmprestimo = est })
                         .Select(empEst => empEst);
 
                     /*var list3 = from emp in db.Emprestimos
@@ -50,11 +50,28 @@ namespace TP_PW.Controllers
                                where usr.Id == currentUserId
                                select new EmprestimosUsersViewModel { emprestimo = emp, utilizador = usr };*/
 
-                    return View(list2);
+                    return View(list);
                 }
                 else
-                    //Not working now because im doint that lambda stuff
-                    return View(db.Emprestimos.ToList());
+                {
+                    var list = db.Emprestimos
+                        .Join(db.EstadoEmprestimo,
+                              emp => emp.IdEstado,
+                              est => est.Id,
+                              (emp, est) => new { emprestimo = emp, estadoEmprestimo = est })
+                        .Join(db.Users,
+                              empEst => empEst.emprestimo.IdUtilizador,
+                              usr => usr.Id,
+                              (empEst, usr) => new EmprestimosViewModel { emprestimo = empEst.emprestimo, estadoEmprestimo = empEst.estadoEmprestimo, utilizador = usr })
+                        .Select(empEstUsr => empEstUsr);
+
+                    /*var list3 = from emp in db.Emprestimos
+                               join usr in db.Users on emp.IdUtilizador equals usr.Id
+                               where usr.Id == currentUserId
+                               select new EmprestimosUsersViewModel { emprestimo = emp, utilizador = usr };*/
+
+                    return View(list);
+                }
             }
             else
                 return RedirectToAction("Index", "Home");
