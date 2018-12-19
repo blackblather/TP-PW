@@ -10,6 +10,7 @@ namespace TP_PW.Models
     {
         public int Id { get; set; }
 
+        [Required]
         [Column(TypeName = "text")]
         public string Mensagem { get; set; }
 
@@ -21,6 +22,21 @@ namespace TP_PW.Models
         [StringLength(128)]
         public string IdRecetor { get; set; }
 
-        public TimeSpan HoraEnvio { get; set; }
+        [Required]
+        public DateTime HoraEnvio { get; set; }
+    }
+
+    public class MensagenViewModel
+    {
+        
+        [Required]
+        public string Mensagem { get; set; }
+
+        
+
+        [Required]
+        public string Recetor { get; set; }
+
+        
     }
 }
