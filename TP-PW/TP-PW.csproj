@@ -206,6 +206,7 @@
     <Compile Include="Controllers\EmprestimosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MensagensController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -246,9 +247,23 @@
     <Compile Include="Migrations\201812120116412_RetireiAutorizadoBool.Designer.cs">
       <DependentUpon>201812120116412_RetireiAutorizadoBool.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201812192241166_gg.cs" />
     <Compile Include="Migrations\201812192241166_gg.Designer.cs">
       <DependentUpon>201812192241166_gg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812181948305_ChangeAnoDescobertoToInt.cs" />
+    <Compile Include="Migrations\201812181948305_ChangeAnoDescobertoToInt.Designer.cs">
+      <DependentUpon>201812181948305_ChangeAnoDescobertoToInt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812190123412_changedDataTypeToDatetime.cs" />
+    <Compile Include="Migrations\201812190123412_changedDataTypeToDatetime.Designer.cs">
+      <DependentUpon>201812190123412_changedDataTypeToDatetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812190128182_MensagenTextIsRequired.cs" />
+    <Compile Include="Migrations\201812190128182_MensagenTextIsRequired.Designer.cs">
+      <DependentUpon>201812190128182_MensagenTextIsRequired.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -327,6 +342,9 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
+
+    <Content Include="Scripts\jquery.mask.js" />
+
     <Content Include="Scripts\vendor\ajaxchimp.min.js" />
     <Content Include="Scripts\vendor\bootstrap.bundle.min.js" />
     <Content Include="Scripts\vendor\bootstrap.min.js" />
@@ -389,6 +407,7 @@
     <Content Include="Views\Emprestimos\Details.cshtml" />
     <Content Include="Views\Emprestimos\Edit.cshtml" />
     <Content Include="Views\Emprestimos\Index.cshtml" />
+    <Content Include="Scripts\README.md" />
     <Content Include="Views\Artigos\Create.cshtml" />
     <Content Include="Views\Artigos\Delete.cshtml" />
     <Content Include="Views\Artigos\Details.cshtml" />
@@ -423,8 +442,19 @@
     <EmbeddedResource Include="Migrations\201812120116412_RetireiAutorizadoBool.resx">
       <DependentUpon>201812120116412_RetireiAutorizadoBool.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201812192241166_gg.resx">
       <DependentUpon>201812192241166_gg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812181948305_ChangeAnoDescobertoToInt.resx">
+      <DependentUpon>201812181948305_ChangeAnoDescobertoToInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812190123412_changedDataTypeToDatetime.resx">
+      <DependentUpon>201812190123412_changedDataTypeToDatetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812190128182_MensagenTextIsRequired.resx">
+      <DependentUpon>201812190128182_MensagenTextIsRequired.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -432,6 +462,12 @@
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\RoleAddToUser.cshtml" />
+    <Content Include="Views\Artigos\Galeria.cshtml" />
+    <Content Include="Views\Mensagens\Create.cshtml" />
+    <Content Include="Views\Mensagens\Delete.cshtml" />
+    <Content Include="Views\Mensagens\Details.cshtml" />
+    <Content Include="Views\Mensagens\Edit.cshtml" />
+    <Content Include="Views\Mensagens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

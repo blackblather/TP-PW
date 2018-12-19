@@ -61,6 +61,10 @@ namespace TP_PW
 
             bundles.Add(new ScriptBundle("~/Scripts/datepickerScripts").Include("~/Scripts/datepicker/datepicker.min.js",
                                                                                 "~/Scripts/datepicker/datepicker.pt-BR.js"));
+            
+
+            bundles.Add(new ScriptBundle("~/Scripts/maskJs").Include("~/Scripts/jquery.mask.js"));
+
         }
     }
 }

@@ -3,17 +3,14 @@
 @{
     ViewBag.Title = "Artigos";
 }
-<div class="container">
-    <h2>Index</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
 
 <div class="container">
     <div class="row">
 
         <div class="col-md-12 border border-white rounded" style="margin: 1rem;">
+            <h2>Artigos</h2>
+            <hr />
             <table class="table">
                 <tr>
                     <th>
@@ -42,7 +39,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td class="col-md-1 col-xs-1">
                             @Html.DisplayFor(modelItem => item.Nome)
                         </td>
                         <td>
@@ -61,8 +58,8 @@
                             @Html.DisplayFor(modelItem => item.ZonaDescoberto)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <br/>
+                            @Html.ActionLink("Details", "Details", new { id = item.Id }) <br />
                             @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                         </td>
                     </tr>

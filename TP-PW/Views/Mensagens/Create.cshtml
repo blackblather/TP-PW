@@ -1,0 +1,51 @@
+﻿@model TP_PW.Models.MensagenViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+<div class="contact-area sp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 border border-white rounded" style="margin: 1rem; padding-top: 1rem;">
+                @using (Html.BeginForm(new { @class = "contact-form" }))
+                {
+                    @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Recetor, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.DropDownList("Recetor", ViewBag.Users as SelectList, new { @class = "form-control custom-select mr-md-3" })
+                            @Html.ValidationMessageFor(model => model.Recetor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Mensagem, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.TextAreaFor(model => model.Mensagem, 5, 67, new { htmlAttributes = new { @class = "form-control", rows = 3 } })
+                            @Html.ValidationMessageFor(model => model.Mensagem, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                   
+                    <div class="form-group row">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="location.href='@Url.Action("Index", "Mensagens")'">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
