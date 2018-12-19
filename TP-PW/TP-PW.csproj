@@ -206,6 +206,7 @@
     <Compile Include="Controllers\EmprestimosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MensagensController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -249,6 +250,14 @@
     <Compile Include="Migrations\201812181948305_ChangeAnoDescobertoToInt.cs" />
     <Compile Include="Migrations\201812181948305_ChangeAnoDescobertoToInt.Designer.cs">
       <DependentUpon>201812181948305_ChangeAnoDescobertoToInt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812190123412_changedDataTypeToDatetime.cs" />
+    <Compile Include="Migrations\201812190123412_changedDataTypeToDatetime.Designer.cs">
+      <DependentUpon>201812190123412_changedDataTypeToDatetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812190128182_MensagenTextIsRequired.cs" />
+    <Compile Include="Migrations\201812190128182_MensagenTextIsRequired.Designer.cs">
+      <DependentUpon>201812190128182_MensagenTextIsRequired.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -426,6 +435,12 @@
     <EmbeddedResource Include="Migrations\201812181948305_ChangeAnoDescobertoToInt.resx">
       <DependentUpon>201812181948305_ChangeAnoDescobertoToInt.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812190123412_changedDataTypeToDatetime.resx">
+      <DependentUpon>201812190123412_changedDataTypeToDatetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812190128182_MensagenTextIsRequired.resx">
+      <DependentUpon>201812190128182_MensagenTextIsRequired.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -433,6 +448,11 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\RoleAddToUser.cshtml" />
     <Content Include="Views\Artigos\Galeria.cshtml" />
+    <Content Include="Views\Mensagens\Create.cshtml" />
+    <Content Include="Views\Mensagens\Delete.cshtml" />
+    <Content Include="Views\Mensagens\Details.cshtml" />
+    <Content Include="Views\Mensagens\Edit.cshtml" />
+    <Content Include="Views\Mensagens\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
