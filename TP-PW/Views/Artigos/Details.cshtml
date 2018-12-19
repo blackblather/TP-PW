@@ -42,13 +42,7 @@
                         @Html.DisplayFor(model => model.Tipo)
                     </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Origem)
-                    </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Origem)
-                    </dd>
 
                     <dt>
                         @Html.DisplayNameFor(model => model.AnoDescoberto)
@@ -64,6 +58,14 @@
 
                     <dd>
                         @Html.DisplayFor(model => model.ZonaDescoberto)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Origem)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Origem)
                     </dd>
                     <hr />
                     @if (Request.IsAuthenticated)
@@ -82,7 +84,7 @@
 
                         </div>
                     }
-                    </dl>
+                </dl>
             </div>
         </div>
     </div>
