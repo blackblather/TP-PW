@@ -43,6 +43,7 @@ namespace TP_PW.Models
         public virtual DbSet<Emprestimo> Emprestimos { get; set; }
         public virtual DbSet<Mensagen> Mensagens { get; set; }
         public virtual DbSet<Tratamento> Tratamentos { get; set; }
+        public virtual DbSet<EstadoEmprestimo> EstadoEmprestimo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -62,8 +63,11 @@ namespace TP_PW.Models
                 .WithRequired(e => e.Artigo)
                 .HasForeignKey(e => e.ArtigoId);
 
+            modelBuilder.Entity<EstadoEmprestimo>()
+                .HasMany(e => e.Emprestimos)
+                .WithRequired(e => e.estadoEmprestimo)
+                .HasForeignKey(e => e.IdEstado);
                 
-
             modelBuilder.Entity<Emprestimo>()
                 .HasMany(e => e.ArtigosEmprestimos)
                 .WithRequired(e => e.Emprestimo)

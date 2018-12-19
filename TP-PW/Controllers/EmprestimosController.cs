@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -15,9 +16,66 @@ namespace TP_PW.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Emprestimos
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.Emprestimos.ToList());
+            if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
+            {
+                if (User.IsInRole("Utilizador"))
+                {
+                    //Source #1: https://forums.asp.net/t/1959723.aspx?ASP+MVC5+Identity+How+to+get+current+ApplicationUser
+                    string currentUserId = User.Identity.GetUserId();
+
+                    /*OLD VERSION*/
+                    //Source #2: https://www.oficinadanet.com.br/artigo/asp.net/fazendo-inner-join-e-left-join-com-linq-no-aspnet
+                    /*var list = from emp in db.Emprestimos 
+                               join usr in db.Users on emp.IdUtilizador equals usr.Id
+                               where usr.Id == currentUserId
+                               select emp;*/
+
+                    /*NEW VERSION*/
+                    //Source #3: https://stackoverflow.com/questions/2767709/join-where-with-linq-and-lambda
+                    //Source #4: https://stackoverflow.com/questions/13692015/how-to-rewrite-this-linq-using-join-with-lambda-expressions
+                    //Source #5: https://stackoverflow.com/questions/5207382/get-data-from-two-tablesjoin-with-linq-and-return-result-into-view
+                    var list = db.Emprestimos
+                        .Where(emp => emp.IdUtilizador == currentUserId)
+                        .Join(db.EstadoEmprestimo,
+                              emp => emp.IdEstado,
+                              est => est.Id,
+                              (emp, est) => new EmprestimosViewModel { emprestimo = emp, estadoEmprestimo = est })
+                        .Select(empEst => empEst);
+
+                    /*var list3 = from emp in db.Emprestimos
+                               join usr in db.Users on emp.IdUtilizador equals usr.Id
+                               where usr.Id == currentUserId
+                               select new EmprestimosUsersViewModel { emprestimo = emp, utilizador = usr };*/
+
+                    return View(list);
+                }
+                else
+                {
+                    var list = db.Emprestimos
+                        .Join(db.EstadoEmprestimo,
+                              emp => emp.IdEstado,
+                              est => est.Id,
+                              (emp, est) => new { emprestimo = emp, estadoEmprestimo = est })
+                        .Join(db.Users,
+                              empEst => empEst.emprestimo.IdUtilizador,
+                              usr => usr.Id,
+                              (empEst, usr) => new EmprestimosViewModel { emprestimo = empEst.emprestimo, estadoEmprestimo = empEst.estadoEmprestimo, utilizador = usr })
+                        .Select(empEstUsr => empEstUsr);
+
+                    /*var list3 = from emp in db.Emprestimos
+                               join usr in db.Users on emp.IdUtilizador equals usr.Id
+                               where usr.Id == currentUserId
+                               select new EmprestimosUsersViewModel { emprestimo = emp, utilizador = usr };*/
+
+                    return View(list);
+                }
+            }
+            else
+                return RedirectToAction("Index", "Home");
+
         }
 
         // GET: Emprestimos/Details/5
