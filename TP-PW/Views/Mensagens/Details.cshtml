@@ -1,0 +1,50 @@
+﻿@model TP_PW.Models.Mensagen
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Mensagen</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Mensagem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mensagem)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdRemetente)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdRemetente)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdRecetor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdRecetor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraEnvio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraEnvio)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
