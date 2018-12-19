@@ -15,8 +15,14 @@
         <table class="table">
             <tr>
                 <th>
-                    Id Utilizador
+                    Id Empréstimo
                 </th>
+                @if (User.IsInRole("Administrador"))
+                {
+                    <th>
+                        Username
+                    </th>
+                }
                 <th>
                     Estado
                 </th>
@@ -30,8 +36,14 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.emprestimo.IdUtilizador)
+                        @Html.DisplayFor(modelItem => item.emprestimo.Id)
                     </td>
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.utilizador.UserName)
+                        </td>
+                    }
                     <td>
                         @Html.DisplayFor(modelItem => item.estadoEmprestimo.Estado)
                     </td>
