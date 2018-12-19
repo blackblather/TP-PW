@@ -11,10 +11,11 @@
         <li><hr /></li>
         @if (User.IsInRole("Administrador") || User.IsInRole("Especialista"))
         {
-            <li>@Html.ActionLink("Manage Artigos", "Index", "Artigos", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
-            <li>@Html.ActionLink("Manage Accounts", "Index", "Users", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+            <li>@Html.ActionLink("Artigos", "Index", "Artigos", routeValues: null, htmlAttributes: new { title = "Artigos" })</li>
+            <li>@Html.ActionLink("Contas", "Index", "Users", routeValues: null, htmlAttributes: new { title = "Contas" })</li>
         }
-        <li>@Html.ActionLink("Manage My Account", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
+        <li>@Html.ActionLink("Minha Conta", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Minha Conta" })</li>
+        <li>@Html.ActionLink("Minhas Mensagens", "Index", "Mensagens", routeValues: null, htmlAttributes: new { title = "Minha Conta" })</li>
         <li>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
