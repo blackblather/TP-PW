@@ -22,7 +22,7 @@ namespace TP_PW.Controllers
         {
             IEnumerable<Mensagen> mensagens;
             ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-            mensagens = (from u in db.Mensagens where u.IdRemetente == user.Id select u).ToList();
+            mensagens = (from u in db.Mensagens where (u.IdRemetente == user.Id || u.IdRecetor == user.Id) select u).ToList();
 
             return View(mensagens);
         }
