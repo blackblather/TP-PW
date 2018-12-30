@@ -1,0 +1,57 @@
+﻿@model TP_PW.Models.MensagenViewModel
+@{
+    ViewBag.Title = "Responder";
+}
+
+<h2>Create</h2>
+<div class="contact-area sp">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-12" style="margin: 1rem; padding-top: 1rem;">
+                @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "contact-form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Recetor, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.Editor("Recetor", new { htmlAttributes = new { @class = "form-control disabled", Value = ViewBag.Recetor, ReadOnly = "readonly" } })
+                            @Html.ValidationMessageFor(model => model.Recetor, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Assunto, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.EditorFor(model => model.Assunto, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Assunto, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.Mensagem, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.TextAreaFor(model => model.Mensagem, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Mensagem, "", new { @class = "text-danger" })
+
+                        </div>
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                            <button type="button" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "Mensagens")'">Cancelar</button>
+
+                        </div>
+
+
+
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,57 +1,124 @@
-﻿@model IEnumerable<TP_PW.Models.Mensagen>
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<TP_PW.Models.MensagenViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
-<div class="container">
-    <div class="row">
 
-        <div class="col-md-12 border border-white rounded" style="margin: 1rem;">
-            <h2>Index</h2>
 
-            <p>
-                @Html.ActionLink("Create New", "Create")
-            </p>
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Mensagem)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IdRemetente)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.IdRecetor)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.HoraEnvio)
-                    </th>
-                    <th></th>
-                </tr>
+<div class="tabs-area spb" style="margin: 1rem;">
 
-                @foreach (var item in Model) {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Mensagem)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdRemetente)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.IdRecetor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.HoraEnvio)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                        </td>
-                    </tr>
-                }
+    <div class="container">
+        <h2>Mensagens</h2>
+        <ul class="nav tabs-nav" id="pills-tab" role="tablist" style="margin: 1rem; padding: 1rem;">
+            <li class="nav-item">
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#mission">
+                    <i class="fa fa fa-share" aria-hidden="true"></i>
+                    <span>Enviadas</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#vision">
+                    <i class="fa fa-reply" aria-hidden="true"></i>
+                    <span>Recebidas</span>
+                </a>
+            </li>
 
-            </table>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="mission" role="tabpanel">
+                <div class="row">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Recetor)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Assunto)
+                            </th>
+                            
+                            <th>
+                                @Html.DisplayNameFor(model => model.HoraEnvio)
+                            </th>
+                            <th>
+                                <input type="button" class="btn btn-outline-secondary btn-sm" value="Nova Mensagem" onclick="location.href = '@Url.Action("Create", "Mensagens")'"/>
+                            </th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            if(item.Remetente == User.Identity.GetUserName()) { 
+                                <tr>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Recetor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Assunto)
+                                    </th>
+                            
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.HoraEnvio)
+                                    </th>
+                                    <td>
+                                        @Html.ActionLink("Ver", "Details", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </table>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="vision" role="tabpanel">
+                <div class="row">
+                    <table class="table">
+                        <tr>
+                            <th>
+                                @Html.Raw("Remetente")
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Assunto)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.HoraEnvio)
+                            </th>
+                            <th></th>
+                        </tr>
+
+                        @foreach (var item in Model)
+                        {
+                            if (item.Recetor == User.Identity.GetUserName())
+                            {
+                                
+                                <tr>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Recetor)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.Assunto)
+                                    </th>
+
+                                    <th>
+                                        @Html.DisplayFor(modelItem => item.HoraEnvio)
+                                    </th>
+                                    <td>
+                                        @Html.ActionLink("Ver", "Details", new { id = item.Id }) |
+                                        @Html.ActionLink("Responder", "Responder", new { recetor = item.Remetente })
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </table>
+                </div>
+            </div>
+
         </div>
+
     </div>
 </div>
+
+
+
