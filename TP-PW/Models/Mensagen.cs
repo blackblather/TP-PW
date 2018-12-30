@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-
 namespace TP_PW.Models
 {
     using System;
@@ -19,11 +16,6 @@ namespace TP_PW.Models
 
         [Required]
         [StringLength(128)]
-        public string Assunto { get; set; }
-
-
-        [Required]
-        [StringLength(128)]
         public string IdRemetente { get; set; }
 
         [Required]
@@ -36,24 +28,15 @@ namespace TP_PW.Models
 
     public class MensagenViewModel
     {
-
-        public int Id { get; set; }
-
+        
         [Required]
         public string Mensagem { get; set; }
 
-        [Required]
-        public string Assunto { get; set; }
+        
 
         [Required]
         public string Recetor { get; set; }
 
-        public string Remetente { get; set; }
-
-        [Required]
-        public DateTime HoraEnvio { get; set; }
-
+        
     }
-
-   
 }

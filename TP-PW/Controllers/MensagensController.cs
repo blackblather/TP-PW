@@ -20,30 +20,11 @@ namespace TP_PW.Controllers
         // GET: Mensagens
         public ActionResult Index()
         {
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-
-
-            
-
-            List<Mensagen> mensagens = new List<Mensagen>();
-            IEnumerable<MensagenViewModel> mensage;
-            List<MensagenViewModel> tmp = new List<MensagenViewModel>();
+            IEnumerable<Mensagen> mensagens;
             ApplicationUser user = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-
             mensagens = (from u in db.Mensagens where (u.IdRemetente == user.Id || u.IdRecetor == user.Id) select u).ToList();
 
-
-            foreach (var mens in mensagens)
-            {
-                MensagenViewModel mvm = new MensagenViewModel() { Id = mens.Id, Assunto = mens.Assunto, Recetor = userManager.FindById(mens.IdRecetor).UserName, Remetente = userManager.FindById(mens.IdRemetente).UserName, Mensagem = mens.Mensagem, HoraEnvio = mens.HoraEnvio };
-                tmp.Add(mvm);
-            }
-            mensage = tmp.AsEnumerable();
-            
-
-
-            return View(mensage);
+            return View(mensagens);
         }
 
         // GET: Mensagens/Details/5
@@ -54,67 +35,15 @@ namespace TP_PW.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Mensagen mensagen = db.Mensagens.Find(id);
-            MensagenViewModel mensagenVM = new MensagenViewModel()
-            {
-                Assunto = mensagen.Assunto, Id = mensagen.Id, HoraEnvio = mensagen.HoraEnvio,
-                Remetente = db.Users.Find(mensagen.IdRemetente).UserName,
-                Recetor = db.Users.Find(mensagen.IdRecetor).UserName, Mensagem = mensagen.Mensagem
-            };
             if (mensagen == null)
             {
                 return HttpNotFound();
             }
-            return View(mensagenVM);
-        }
-
-        public ActionResult Responder(string recetor)
-        {
-            var userStore = new UserStore<ApplicationUser>(db);
-            var userManager = new UserManager<ApplicationUser>(userStore);
-            var userRecep = userManager.FindById(recetor);
-            ViewBag.Recetor = userRecep.UserName;
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Responder([Bind(Include = "Mensagem,Recetor,Assunto")] MensagenViewModel mensagen)
-        {
-
-            if (ModelState.IsValid)
-            {
-                Mensagen mens = null;
-                var userStore = new UserStore<ApplicationUser>(db);
-                var userManager = new UserManager<ApplicationUser>(userStore);
-                ApplicationUser userRemet = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
-                var userRecep = userManager.FindByName(mensagen.Recetor);
-
-                mens = new Mensagen
-                {
-                    HoraEnvio = DateTime.Now,
-                    IdRecetor = userRecep.Id,
-                    Assunto = mensagen.Assunto,
-                    IdRemetente = userRemet.Id,
-                    Mensagem = mensagen.Mensagem
-                };
-
-                
-
-                db.Mensagens.Add(mens);
-                db.SaveChanges();
-
-                ViewBag.Recetor = mensagen.Recetor;
-
-                return RedirectToAction("Index");
-
-            }
-
-
             return View(mensagen);
         }
 
         // GET: Mensagens/Create
-            public ActionResult Create()
+        public ActionResult Create()
         {
             List<string> users;
             var userStore = new UserStore<ApplicationUser>(db);
@@ -130,24 +59,21 @@ namespace TP_PW.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Mensagem,Recetor,Assunto")] MensagenViewModel mensagen)
+        public ActionResult Create([Bind(Include = "Mensagem,Recetor")] MensagenViewModel mensagen)
         {
-           
-            
+            List<string> users;
+            Mensagen mens = null;
             if (ModelState.IsValid)
             {
-                List<string> users;
-                Mensagen mens = null;
                 var userStore = new UserStore<ApplicationUser>(db);
                 var userManager = new UserManager<ApplicationUser>(userStore);
                 ApplicationUser userRemet = System.Web.HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(System.Web.HttpContext.Current.User.Identity.GetUserId());
                 var userRecep = userManager.FindByName(mensagen.Recetor);
 
-               mens = new Mensagen
+                mens = new Mensagen
                 {
                     HoraEnvio = DateTime.Now,
                     IdRecetor = userRecep.Id,
-                    Assunto = mensagen.Assunto,
                     IdRemetente = userRemet.Id,
                     Mensagem = mensagen.Mensagem
                 };

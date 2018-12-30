@@ -247,6 +247,7 @@
     <Compile Include="Migrations\201812120116412_RetireiAutorizadoBool.Designer.cs">
       <DependentUpon>201812120116412_RetireiAutorizadoBool.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Migrations\201812192241166_gg.cs" />
     <Compile Include="Migrations\201812192241166_gg.Designer.cs">
       <DependentUpon>201812192241166_gg.cs</DependentUpon>
@@ -262,14 +263,7 @@
     <Compile Include="Migrations\201812190128182_MensagenTextIsRequired.cs" />
     <Compile Include="Migrations\201812190128182_MensagenTextIsRequired.Designer.cs">
       <DependentUpon>201812190128182_MensagenTextIsRequired.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812211442026_aa.cs" />
-    <Compile Include="Migrations\201812211442026_aa.Designer.cs">
-      <DependentUpon>201812211442026_aa.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201812241736050_AddMensagensAssunto.cs" />
-    <Compile Include="Migrations\201812241736050_AddMensagensAssunto.Designer.cs">
-      <DependentUpon>201812241736050_AddMensagensAssunto.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -348,7 +342,9 @@
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Scripts\jquery-2.2.4.min.js" />
+
     <Content Include="Scripts\jquery.mask.js" />
+
     <Content Include="Scripts\vendor\ajaxchimp.min.js" />
     <Content Include="Scripts\vendor\bootstrap.bundle.min.js" />
     <Content Include="Scripts\vendor\bootstrap.min.js" />
@@ -446,6 +442,7 @@
     <EmbeddedResource Include="Migrations\201812120116412_RetireiAutorizadoBool.resx">
       <DependentUpon>201812120116412_RetireiAutorizadoBool.cs</DependentUpon>
     </EmbeddedResource>
+
     <EmbeddedResource Include="Migrations\201812192241166_gg.resx">
       <DependentUpon>201812192241166_gg.cs</DependentUpon>
     </EmbeddedResource>
@@ -457,12 +454,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812190128182_MensagenTextIsRequired.resx">
       <DependentUpon>201812190128182_MensagenTextIsRequired.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812211442026_aa.resx">
-      <DependentUpon>201812211442026_aa.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201812241736050_AddMensagensAssunto.resx">
-      <DependentUpon>201812241736050_AddMensagensAssunto.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -476,7 +468,6 @@
     <Content Include="Views\Mensagens\Details.cshtml" />
     <Content Include="Views\Mensagens\Edit.cshtml" />
     <Content Include="Views\Mensagens\Index.cshtml" />
-    <Content Include="Views\Mensagens\Responder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
