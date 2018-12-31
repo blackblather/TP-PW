@@ -9,9 +9,6 @@
     <h2>Histórico de empréstimos</h2>
     @if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
     {
-        <p>
-            @Html.ActionLink("Adicionar Emprestimo", "Create", null, new { @class="btn btn-primary" })
-        </p>
         <table class="table">
             <tr>
                 <th>
@@ -29,7 +26,7 @@
                 <th>
                     Data
                 </th>
-                <th></th>
+                <th>@Html.ActionLink("Adicionar Emprestimo", "Create", null, new { @class = "btn btn-outline-secondary btn-sm" })</th>
             </tr>
 
             @foreach (var item in Model)
