@@ -125,8 +125,6 @@ namespace TP_PW.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-
-
                 if (!IsAdminUser())
                 {
                     return RedirectToAction("Index", "Home");
@@ -138,8 +136,7 @@ namespace TP_PW.Controllers
             }
 
 
-            ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Administrador"))
-                .ToList(), "Name", "Name");
+            ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Administrador")).ToList(), "Name", "Name");
 
             return View();
         }

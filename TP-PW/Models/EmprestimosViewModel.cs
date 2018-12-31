@@ -1,4 +1,6 @@
-﻿namespace TP_PW.Models
+﻿using System.Collections.Generic;
+
+namespace TP_PW.Models
 {
 
     public class EmprestimosViewModel
@@ -7,5 +9,6 @@
         public ApplicationUser utilizador { get; set; }
         public ArtigosEmprestimo artigosEmprestimo { get; set; }
         public EstadoEmprestimo estadoEmprestimo { get; set; }
+        public List<EstadoEmprestimo> todosOsEstados { get; set; }
     }
 }

@@ -93,83 +93,198 @@ namespace TP_PW.Controllers
             return View(emprestimo);
         }
 
+
+
+        private List<Artigo> GetArtigosDisponiveis() {
+            List<Artigo> artigos = new List<Artigo>();
+            var list = db.Artigos
+                    .GroupJoin(db.ArtigosEmprestimos,
+                               art => art.Id,
+                               artEmp => artEmp.IdArtigo,
+                               (art, artEmp) => new { artigo = art, artigosEmprestimo = artEmp });
+            foreach (var art in list)
+            {
+                if (art.artigosEmprestimo.Count() > 0)
+                {
+                    var returnedArtEmpList = art.artigosEmprestimo.Where(artEmp => artEmp.DataRetornoArtigo != null);
+                    foreach (var art3 in returnedArtEmpList)
+                        artigos.Add(art3.Artigo);
+                }
+                else
+                {
+                    artigos.Add(art.artigo);
+                }
+            }
+            return artigos;
+        }
+
         // GET: Emprestimos/Create
+        [Authorize]
         public ActionResult Create()
         {
-            return View();
+            if (User.IsInRole("Utilizador"))
+                return View(GetArtigosDisponiveis());
+            else
+                return RedirectToAction("Index", "Home");
+        }
+
+        private bool IdArtigoExiste(List<Artigo> listaArtigos, int idArt)
+        {
+            foreach (Artigo art in listaArtigos)
+                if (art.Id == idArt)
+                    return true;
+            return false;
+        }
+        
+        private bool IdArtigoExiste(List<ArtigosEmprestimo> listaArtigos, int idArt)
+        {
+            foreach (ArtigosEmprestimo artEmp in listaArtigos)
+                if (artEmp.IdArtigo == idArt)
+                    return true;
+            return false;
         }
 
         // POST: Emprestimos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdUtilizador,IdEstado,DataEmprestimo")] Emprestimo emprestimo)
+        public ActionResult Create(DateTime dataEmprestimo, List<string> artigosEmprestimo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Emprestimos.Add(emprestimo);
-                db.SaveChanges();
+                if (User.IsInRole("Utilizador") && ModelState.IsValid && artigosEmprestimo.Count() > 0 && DateTime.Compare(dataEmprestimo, DateTime.Today) >= 0)
+                {
+                    List<ArtigosEmprestimo> artEmpFiltered = new List<ArtigosEmprestimo>();
+                    foreach (string idArt in artigosEmprestimo)
+                    {
+                        if (idArt != "false")
+                        {
+                            int idArtInt = Convert.ToInt32(idArt);
+                            if (IdArtigoExiste(GetArtigosDisponiveis(), idArtInt) && !IdArtigoExiste(artEmpFiltered, idArtInt))
+                            {
+                                artEmpFiltered.Add(new ArtigosEmprestimo()
+                                {
+                                    IdArtigo = idArtInt
+                                });
+                            }
+                        }
+                    }
+                    Emprestimo emprestimo = new Emprestimo()
+                    {
+                        DataEmprestimo = dataEmprestimo,
+                        IdEstado = 1,   //-> Pendente
+                        IdUtilizador = User.Identity.GetUserId(),
+                        ArtigosEmprestimos = artEmpFiltered
+                    };
+                    db.Emprestimos.Add(emprestimo);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
                 return RedirectToAction("Index");
             }
+            return RedirectToAction("Index");
+        }
 
-            return View(emprestimo);
+        private EmprestimosViewModel GetEmprestimosViewModel(int idEmp)
+        {
+            var empUsr = db.Emprestimos.Where(emp => emp.Id == idEmp)
+                                        .Join(db.EstadoEmprestimo,
+                                            emp => emp.IdEstado,
+                                          estEmp => estEmp.Id,
+                                            (emp, estEmp) => new {
+                                                emp = emp,
+                                                estEmp = estEmp
+                                            })
+                                        .Join(db.Users,
+                                            empEstEmp => empEstEmp.emp.IdUtilizador,
+                                            usr => usr.Id,
+                                            (empEstEmp, usr) => new EmprestimosViewModel()
+                                            {
+                                                estadoEmprestimo = empEstEmp.estEmp,
+                                                emprestimo = empEstEmp.emp,
+                                                todosOsEstados = db.EstadoEmprestimo.ToList(),
+                                                utilizador = usr
+                                            })
+                                        .ToList();
+            if (empUsr.Count() == 1)
+                return empUsr.ElementAt(0);
+            return null;
         }
 
         // GET: Emprestimos/Edit/5
-        public ActionResult Edit(int? id)
+        [Authorize]
+        public ActionResult Edit(int id)
         {
-            if (id == null)
+            if (User.IsInRole("Administrador") || User.IsInRole("Especialista"))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                EmprestimosViewModel empVM;
+                if ((empVM = GetEmprestimosViewModel(id)) != null)
+                    return View(empVM);
             }
-            Emprestimo emprestimo = db.Emprestimos.Find(id);
-            if (emprestimo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(emprestimo);
+            return RedirectToAction("Index", "Home");
+        }
+
+        private bool IdEstadoExiste(int idEstado)
+        {
+            var estadoEmprestimo = db.EstadoEmprestimo.Where(estEmp => estEmp.Id == idEstado).ToList();
+            if (estadoEmprestimo.Count() == 1)
+                return true;
+            return false;
         }
 
         // POST: Emprestimos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize] 
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,IdUtilizador,IdEstado,DataEmprestimo")] Emprestimo emprestimo)
+        public ActionResult Edit(int idEstado, int idEmprestimo)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (User.IsInRole("Administrador") || User.IsInRole("Especialista")))
             {
-                db.Entry(emprestimo).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                Emprestimo empUpdate;
+                if (IdEstadoExiste(idEstado) /*&& idEstado != emprestimo.IdEstado*/ && (empUpdate = db.Emprestimos.Find(idEmprestimo)) != null)
+                {
+                    if (idEstado != empUpdate.IdEstado)
+                        empUpdate.IdEstado = idEstado;
+                    db.Entry(empUpdate).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
             }
-            return View(emprestimo);
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
+            return RedirectToAction("Index");
         }
 
         // GET: Emprestimos/Delete/5
-        public ActionResult Delete(int? id)
+        [Authorize]
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            if((User.IsInRole("Administrador") || User.IsInRole("Especialista")))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                EmprestimosViewModel empVM;
+                if ((empVM = GetEmprestimosViewModel(id)) != null)
+                    return View(empVM);
             }
-            Emprestimo emprestimo = db.Emprestimos.Find(id);
-            if (emprestimo == null)
-            {
-                return HttpNotFound();
-            }
-            return View(emprestimo);
+            return RedirectToAction("Index", "Emprestimos");
+
         }
 
         // POST: Emprestimos/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int idEmprestimo)
         {
-            Emprestimo emprestimo = db.Emprestimos.Find(id);
-            db.Emprestimos.Remove(emprestimo);
-            db.SaveChanges();
+            if ((User.IsInRole("Administrador") || User.IsInRole("Especialista")))
+            {
+                Emprestimo emprestimo = db.Emprestimos.Find(idEmprestimo);
+                db.Emprestimos.Remove(emprestimo);
+                db.SaveChanges();
+            }
             return RedirectToAction("Index");
         }
 

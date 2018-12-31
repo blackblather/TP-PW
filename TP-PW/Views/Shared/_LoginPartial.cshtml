@@ -9,6 +9,7 @@
     <ul class="sub-menu" style="width: 148px !important;">
         <li class="disabled"> @User.Identity.GetUserName()</li>
         <li><hr /></li>
+        <li>@Html.ActionLink("Definições", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
         @if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
         {
             <li>@Html.ActionLink("Empréstimos", "Index", "Emprestimos", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
@@ -19,11 +20,8 @@
             <li>@Html.ActionLink("Artigos", "Index", "Artigos", routeValues: null, htmlAttributes: new { title = "Artigos" })</li>
             <li>@Html.ActionLink("Contas", "Index", "Users", routeValues: null, htmlAttributes: new { title = "Contas" })</li>
         }
-       
-
-        <li>@Html.ActionLink("Definições", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
         
-        <li>@Html.ActionLink("Minhas Mensagens", "Index", "Mensagens", routeValues: null, htmlAttributes: new { title = "Minha Conta" })</li>
+        <li>@Html.ActionLink("Mensagens", "Index", "Mensagens", routeValues: null, htmlAttributes: new { title = "Minha Conta" })</li>
      
         <li>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))

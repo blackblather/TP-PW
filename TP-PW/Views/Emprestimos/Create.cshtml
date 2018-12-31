@@ -1,51 +1,79 @@
-﻿@model TP_PW.Models.Emprestimo
+﻿@model List<TP_PW.Models.Artigo>
 
 @{
     ViewBag.Title = "Create";
 }
+<div class="container">
+    <h2>Adicionar empréstimo</h2>
 
-<h2>Create</h2>
+    @using (Html.BeginForm("Create", "Emprestimos", null, FormMethod.Post, new { @class = "form-box", role = "form", style = "margin: 25px" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+            <div class="row">
+                <div class="offset-md-1 col-md-5">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Emprestimo</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdUtilizador, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdUtilizador, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdUtilizador, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label>Data de início do empréstimo:</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control date" name="dataEmprestimo" value="@DateTime.Today.Date.ToString("dd/MM/yyyy")" />
+                            <div class="input-group-append">
+                                <div class="input-group-text"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+
+                    <div class="form-group">
+                        <label>Artigos disponíveis:</label>
+                        @*SOURCE: https://stackoverflow.com/questions/5688910/asp-net-mvc-dropdownlistfor-with-model-of-type-liststring**@
+                        @*Html.DropDownList( "Artigos",
+                   new SelectList(
+                       Model.Select(art => new { Value = art.Id, Text = art.Nome }),
+                       "Value",
+                       "Text"
+                   ),
+                   new { @class = "form-control" }
+                )*@
+
+                        @if (Model.Count() > 0)
+                        {
+                            <div class="row">
+                                @foreach (var item in Model)
+                                {
+                                    <div class="single-portfolio col-md-3 branding photography design">
+                                        <div class="inner">
+                                            <div class="portfolio-img">
+                                                <img src=@item.ImagemURL alt="Imagem do artigo">
+                                            </div>
+                                            <div class="portfolio-content">
+                                                <a href="@Url.Action("Details", "Artigos", new { id = item.Id })">
+                                                    <h3>@item.Nome</h3>
+                                                </a>
+                                                @Html.CheckBox("artigosEmprestimo", new { @Value = item.Id })@item.Tipo.ToString()
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-center">
+                                <h6>Nenhum artigo disponível de momento...</h6>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group text-right">
+                        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
+                        <input type="submit" value="Confirmar" class="btn btn-primary" />
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IdEstado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IdEstado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IdEstado, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataEmprestimo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DataEmprestimo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DataEmprestimo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    }
 </div>

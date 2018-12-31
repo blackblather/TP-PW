@@ -1,48 +1,44 @@
-﻿@model TP_PW.Models.Emprestimo
+﻿@model TP_PW.Models.EmprestimosViewModel
 
 @{
     ViewBag.Title = "Delete";
 }
+<div class="container">
+    <h2>Remover Emprestimo</h2>
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Emprestimo</h4>
+    <h3>Tem a certeza que pretende remover este empréstimo?</h3>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.IdUtilizador)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.IdUtilizador)
-        </dd>
+    <div class="row">
+        <div class="offset-md-1 col-md-10">
+            <dl class="dl-horizontal">
+                <dt>Nome de utilizador:</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.utilizador.UserName)
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.IdEstado)
-        </dt>
+                <dt>Estado do emprestimo:</dt>
+                <dd>
+                    @Html.DisplayFor(model => model.estadoEmprestimo.Estado)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.IdEstado)
-        </dd>
+                <dt>Data de início do empréstimo:</dt>
+                <dd>
+                    @Model.emprestimo.DataEmprestimo.ToString("dd/MM/yyyy")
+                </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DataEmprestimo)
-        </dt>
+            </dl>
 
-        <dd>
-            @Html.DisplayFor(model => model.DataEmprestimo)
-        </dd>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.Hidden("idEmprestimo", Model.emprestimo.Id)
 
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <div class="form-group text-right">
+                    <input type="submit" value="Remover" class="btn btn-default" />
+                    @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-danger" })
+                </div>
+            }
         </div>
-    }
+    </div>
 </div>

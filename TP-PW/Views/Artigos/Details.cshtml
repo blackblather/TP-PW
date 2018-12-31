@@ -4,89 +4,74 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="container">
+    <h2>Detalhes do Artigo</h2>
 
-<div>
-    <h4>Artigo</h4>
-    <hr />
-    <div class="container">
-        <div class="row" style="margin-bottom: 1rem !important;">
-            <div class="col-md-8 ">
-                <img src="@Html.DisplayFor(model => model.ImagemURL)" />
-            </div>
-            <div class="col-md-4">
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Nome)
-                    </dt>
+    <div>
+        <h4>@Model.Nome</h4>
+        <hr />
+        <div class="container">
+            <div class="row" style="margin-bottom: 1rem !important;">
+                <div class="col-md-8 text-center">
+                    <img src="@Html.DisplayFor(model => model.ImagemURL)" />
+                </div>
+                <div class="col-md-4">
+                    <dl class="dl-horizontal">
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Nome)
-                    </dd>
+                        <dt>Descrição:</dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Descricao)
+                        </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Descricao)
-                    </dt>
+                        <dt>Tipo:</dt>
+                        <dd>
+                            @Html.DisplayFor(model => model.Tipo)
+                        </dd>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.Descricao)
-                    </dd>
+                        <dt>Ano do descobrimento:</dt>
+                        <dd>
+                            @if (Model.AnoDescoberto != null) {
+                                @Html.DisplayFor(model => model.AnoDescoberto);
+                            }
+                            else{ 
+                                @:Desconhecido
+                            }
+                        </dd>
 
-
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Tipo)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Tipo)
-                    </dd>
-
-
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.AnoDescoberto)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.AnoDescoberto)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.ZonaDescoberto)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.ZonaDescoberto)
-                    </dd>
-
-                    <dt>
-                        @Html.DisplayNameFor(model => model.Origem)
-                    </dt>
-
-                    <dd>
-                        @Html.DisplayFor(model => model.Origem)
-                    </dd>
-                    <hr />
-                    @if (Request.IsAuthenticated)
-                    {
-                        <div class="col-md-12">
-                            @if (User.IsInRole("Utilizador"))
+                        <dt>Zona em que foi descoberto:</dt>
+                        <dd>
+                            @if (Model.ZonaDescoberto != null)
                             {
-                                <button type="button" class="btn btn-outline-secondary" onclick="location.href = '#'">Requesitar</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Galeria", "Artigos")'">Voltar</button>
+                                @Html.DisplayFor(model => model.ZonaDescoberto);
                             }
                             else
                             {
-                                <button type="button" class="btn btn-outline-secondary " onclick="location.href = '@Url.Action("Edit", "Artigos", new { id = Model.Id })'">Editar</button>
-                                <button type="button" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Index", "Artigos")'">Voltar</button>
+                                @:Desconhecido
                             }
+                        </dd>
 
+                        <dt>Origem:</dt>
+                        <dd>
+                            @if (Model.Origem != null)
+                            {
+                                @Html.DisplayFor(model => model.Origem)
+                            }
+                            else{
+                                @:Desconhecido
+                            }
+                        </dd>
+
+                        <hr />
+                        <div class="col-md-12">
+                            @if (Request.IsAuthenticated && !User.IsInRole("Utilizador"))
+                            {
+                                <button type="button" class="btn btn-outline-secondary " onclick="location.href = '@Url.Action("Edit", "Artigos", new { id = Model.Id })'">Editar</button>
+                            }
+                            <button type="button" class="btn btn-outline-danger" onclick="location.href = '@Url.Action("Galeria", "Artigos")'">Voltar para galeria</button>
                         </div>
-                    }
-                </dl>
+                    </dl>
+                </div>
             </div>
         </div>
     </div>
 </div>
-

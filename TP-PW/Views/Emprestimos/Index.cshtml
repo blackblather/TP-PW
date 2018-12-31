@@ -6,11 +6,11 @@
 @if (Request.IsAuthenticated)
 {
     <div class="container">
-    <h2>Empréstimos</h2>
+    <h2>Histórico de empréstimos</h2>
     @if (User.IsInRole("Administrador") || User.IsInRole("Utilizador"))
     {
         <p>
-            @Html.ActionLink("Adicionar Emprestimo", "Create")
+            @Html.ActionLink("Adicionar Emprestimo", "Create", null, new { @class="btn btn-primary" })
         </p>
         <table class="table">
             <tr>
@@ -48,10 +48,13 @@
                         @Html.DisplayFor(modelItem => item.estadoEmprestimo.Estado)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.emprestimo.DataEmprestimo)
+                        @item.emprestimo.DataEmprestimo.ToString("dd/MM/yyyy")
                     </td>
                     <td>
-                        @Html.ActionLink("Editar", "Edit", new { id = item.emprestimo.Id }) |
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            @Html.ActionLink("Editar", "Edit", new { id = item.emprestimo.Id }) @:|
+                        }
                         @Html.ActionLink("Detalhes", "Details", new { id = item.emprestimo.Id }) |
                         @Html.ActionLink("Remover", "Delete", new { id = item.emprestimo.Id })
                     </td>
